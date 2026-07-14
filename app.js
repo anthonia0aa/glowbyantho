@@ -66,4 +66,42 @@ function updateCart(){$('#cartCount').textContent=cart.reduce((n,x)=>n+x.qty,0)}
 $('#cartBtn').onclick=()=>{if(!cart.length){openModal('<h2>Tu carrito está vacío</h2>');return}const total=cart.reduce((n,x)=>n+x.price*x.qty,0);openModal(`<p class="eyebrow">TU CARRITO</p><h2>Glow Shop</h2>${cart.map(x=>`<p>${x.qty} × ${x.name} <b>$${(x.qty*x.price).toLocaleString('es-CL')}</b></p>`).join('')}<h3>Total: $${total.toLocaleString('es-CL')}</h3><form id="orderForm"><input required name="name" placeholder="Nombre completo"><input required name="phone" placeholder="WhatsApp"><input name="rut" placeholder="RUT"><input required name="region" placeholder="Región"><input required name="commune" placeholder="Comuna"><input required name="destination" placeholder="Dirección o sucursal Starken"><button class="btn primary">Comprar por WhatsApp</button></form><small>El despacho se paga al recibir.</small>`);$('#orderForm').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));await db.from('orders').insert({client_name:d.name,rut:d.rut||null,phone:d.phone,region:d.region,commune:d.commune,starken_destination:d.destination,items:cart,products_total:total});const lines=cart.map(x=>`• ${x.name} x${x.qty} — $${(x.price*x.qty).toLocaleString('es-CL')}`).join('\n');window.open(wa(`Hola, vengo desde la página de Glow by Antho 💗\n\nQuisiera comprar:\n${lines}\n\nTotal productos: $${total.toLocaleString('es-CL')}\n\nNombre: ${d.name}\nRUT: ${d.rut}\nTeléfono: ${d.phone}\nRegión: ${d.region}\nComuna: ${d.commune}\nDirección o sucursal Starken: ${d.destination}\n\nEntiendo que el despacho se paga al recibir.`),'_blank')}};
 
 $('#bookingForm').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),opt=$('#serviceSelect').selectedOptions[0],abono=+(opt?.dataset.abono||0);const {error}=await db.from('bookings').insert({client_name:d.name,phone:d.phone,service:d.service,appointment_date:d.date,appointment_time:d.time,deposit_amount:abono,estimated_price_text:`Abono desde $${abono.toLocaleString('es-CL')}`,notes:d.notes||null,status:'pendiente'});if(error){toast('No se pudo guardar la reserva');return}window.open(wa(`Hola, vengo desde la página de Glow by Antho y quisiera reservar 💗\n\nNombre: ${d.name}\nTeléfono: ${d.phone}\nServicio: ${d.service}\nFecha: ${d.date}\nHora: ${d.time}\nComentario: ${d.notes||'Sin comentario'}\n\nAbono informado: $${abono.toLocaleString('es-CL')}\nEntiendo que este monto corresponde solamente al abono.`),'_blank');toast('Reserva registrada')};
-$('#questionForm').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));const {error}=await db.from('questions').insert({client_name:d.name,category:d.category,question:d.question,status:'pendiente'});if(error){toast('No se pudo enviar');return}e.target.reset();toast('Pregunta enviada a Antho ✨')};
+$('#questionForm').onsubmit=async e=>{
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(e.target));
+  const {error}=await db.from('questions').insert({
+    client_name:d.name,
+    phone:d.phone||null,
+    category:d.category,
+    question:d.question,
+    status:'pendiente'
+  });
+  if(error){toast('No se pudo enviar la pregunta');return}
+  e.target.reset();
+  toast('Pregunta enviada a Antho ✨');
+};
+// Portada interactiva: movimiento suave de los productos con el mouse
+const heroStage=document.querySelector('#parallaxHero');
+if(heroStage){
+  heroStage.addEventListener('mousemove',e=>{
+    const rect=heroStage.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    heroStage.querySelectorAll('[data-depth]').forEach(el=>{
+      const depth=Number(el.dataset.depth||10);
+      el.style.translate=`${x*depth}px ${y*depth}px`;
+    });
+  });
+  heroStage.addEventListener('mouseleave',()=>{
+    heroStage.querySelectorAll('[data-depth]').forEach(el=>el.style.translate='0 0');
+  });
+}
+document.querySelectorAll('.service-card,.product-card,.ingredient,.pair').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const rx=((e.clientY-r.top)/r.height-.5)*-4;
+    const ry=((e.clientX-r.left)/r.width-.5)*4;
+    card.style.transform=`translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>card.style.transform='');
+});

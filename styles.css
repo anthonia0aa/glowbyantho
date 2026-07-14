@@ -26,3 +26,59 @@ body{background:radial-gradient(circle at 10% 10%,#fff0f5 0,transparent 30%),rad
 @keyframes ringFloat{50%{transform:translateY(-24px) scale(1.08);opacity:.55}}
 @keyframes chipFloat{50%{transform:translateY(-12px) rotate(1.5deg)}}
 @media(max-width:920px){.hero-microcards{grid-template-columns:1fr}.floating-chip{display:none}.signature-grid{grid-template-columns:1fr}.hero-copy:after{display:none}}
+
+/* Glow by Antho Studio — cierre de versión 1.0 */
+.reveal{opacity:1!important;transform:none!important}
+.version-label{display:block;margin-top:5px;font-size:10px;letter-spacing:.16em;color:#e9a6ba}
+.question-form input,.question-form select,.question-form textarea{min-width:0}
+
+/* ===== Glow by Antho Studio Final 1.1 — portada K-beauty ===== */
+.hero-visual{perspective:1200px}
+.organic-card{overflow:visible}
+.floating-product{
+  position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:112px;height:205px;border-radius:26px 26px 36px 36px;
+  box-shadow:0 30px 45px rgba(119,76,95,.25),inset 0 0 30px rgba(255,255,255,.7);
+  font-size:12px;font-weight:700;letter-spacing:.13em;backdrop-filter:blur(8px);
+  transition:transform .25s ease;animation:productFloat 5s ease-in-out infinite;
+  transform-style:preserve-3d
+}
+.floating-product .cap{position:absolute;top:-42px;width:44px;height:48px;border-radius:12px 12px 8px 8px;background:#6f5a64;box-shadow:inset 0 0 12px rgba(255,255,255,.18)}
+.floating-product span{font-size:13px}.floating-product small{font-size:9px;letter-spacing:.08em;margin-top:8px;opacity:.7}
+.fp-anua{left:15%;bottom:90px;background:linear-gradient(180deg,#f7fbf3,#daeacb);transform:rotate(-7deg);animation-delay:-1s}
+.fp-medicube{left:43%;bottom:75px;width:122px;height:225px;background:linear-gradient(180deg,#fff7fa,#efb8cc);transform:rotate(4deg);animation-delay:-2.1s}
+.fp-abib{right:11%;bottom:100px;width:100px;height:190px;background:linear-gradient(180deg,#f9fbff,#cfe9f1);transform:rotate(8deg);animation-delay:-.5s}
+.fp-torriden{left:37%;top:66px;width:82px;height:145px;background:linear-gradient(180deg,#f9fdff,#bfe9f2);transform:rotate(-3deg);animation-delay:-3s}
+.fp-skin1004{right:18%;top:76px;width:78px;height:138px;background:linear-gradient(180deg,#fffdf4,#ead8a9);transform:rotate(5deg);animation-delay:-1.6s}
+.fp-torriden .cap,.fp-skin1004 .cap{top:-30px;width:34px;height:36px}
+@keyframes productFloat{0%,100%{translate:0 0}50%{translate:0 -18px}}
+.kbeauty-strip{padding-top:70px}
+.brand-cloud{position:relative;min-height:360px;border-radius:38px;background:linear-gradient(140deg,#fff6f9,#f3f8fb 55%,#f7f0fb);border:1px solid #efdce5;overflow:hidden;box-shadow:0 24px 60px rgba(155,90,119,.12)}
+.brand-cloud:before,.brand-cloud:after{content:"";position:absolute;border-radius:50%;filter:blur(8px);opacity:.55}
+.brand-cloud:before{width:220px;height:220px;background:#ffd9e6;left:5%;top:14%}
+.brand-cloud:after{width:260px;height:260px;background:#dff1f6;right:7%;bottom:5%}
+.brand-orbit{position:absolute;z-index:2;padding:18px 22px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(239,208,221,.85);box-shadow:0 16px 32px rgba(128,82,101,.12);backdrop-filter:blur(14px);display:flex;gap:10px;align-items:center;animation:orbitFloat 6s ease-in-out infinite}
+.brand-orbit span{font-weight:700;letter-spacing:.08em}.brand-orbit small{color:#8d737f}
+.orbit-a{left:8%;top:18%;animation-delay:-1s}.orbit-b{left:35%;top:10%;animation-delay:-2s}.orbit-c{right:8%;top:22%;animation-delay:-3s}.orbit-d{left:18%;bottom:18%;animation-delay:-1.5s}.orbit-e{left:48%;bottom:12%;animation-delay:-2.7s}.orbit-f{right:10%;bottom:22%;animation-delay:-.7s}
+@keyframes orbitFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(1deg)}}
+.visual-routine{margin:52px 0 22px;position:relative;min-height:230px;border-radius:32px;background:linear-gradient(135deg,#fff9fb,#f6f9ff);border:1px solid #eedce5;overflow:hidden;padding:28px}
+.routine-line{position:absolute;left:9%;right:9%;top:50%;height:2px;background:linear-gradient(90deg,#f3b2c9,#c7e9f0,#e7d7f6)}
+.routine-sun,.routine-moon{position:absolute;z-index:2;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:white;box-shadow:0 14px 28px rgba(127,84,102,.12);font-size:27px}
+.routine-sun{left:4%;top:50%;transform:translateY(-50%)}.routine-moon{right:4%;top:50%;transform:translateY(-50%)}
+.routine-sun span,.routine-moon span{position:absolute;bottom:8px;font-size:9px;letter-spacing:.12em}
+.routine-card{position:absolute;z-index:3;background:rgba(255,255,255,.88);border:1px solid #ead7df;border-radius:20px;padding:14px 16px;box-shadow:0 12px 24px rgba(130,87,104,.11);animation:orbitFloat 5s ease-in-out infinite}
+.routine-card small{display:block;color:#8d7580}.rc1{left:17%;top:22%}.rc2{left:35%;bottom:18%;animation-delay:-1s}.rc3{left:51%;top:18%;animation-delay:-2s}.rc4{right:26%;bottom:20%;animation-delay:-1.5s}.rc5{right:12%;top:24%;animation-delay:-2.5s}
+@media(max-width:920px){
+  .fp-torriden,.fp-skin1004{display:none}
+  .fp-anua{left:10%}.fp-medicube{left:42%}.fp-abib{right:7%}
+  .brand-cloud{min-height:520px}
+  .brand-orbit{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;margin:18px;display:inline-flex}
+  .visual-routine{min-height:430px}.routine-line{display:none}
+  .routine-card{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;margin:12px 90px}
+}
+@media(max-width:560px){
+  .floating-product{transform:scale(.78)!important}
+  .fp-anua{left:1%;bottom:55px}.fp-medicube{left:35%;bottom:48px}.fp-abib{right:-3%;bottom:60px}
+  .brand-orbit{display:flex;margin:14px}
+  .routine-card{margin:12px 70px}
+}

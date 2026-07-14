@@ -60,6 +60,18 @@
 
     <div class="marquee"><div>FACIAL CARE ✦ HAIR GLOW ✦ SKIN JOURNEY ✦ K-BEAUTY ✦ RESERVAS ✦</div></div>
 
+    <section class="section kbeauty-strip shell">
+      <div class="section-head reveal"><span>00</span><div><p class="eyebrow">FAVORITOS GLOW</p><h2>Inspiración K‑beauty</h2><p>Una selección visual de marcas y activos que inspiran el universo de Glow by Antho.</p></div></div>
+      <div class="brand-cloud reveal">
+        <article class="brand-orbit orbit-a"><span>ANUA</span><small>calma & equilibrio</small></article>
+        <article class="brand-orbit orbit-b"><span>MEDICUBE</span><small>textura & glow</small></article>
+        <article class="brand-orbit orbit-c"><span>ABIB</span><small>hidrogel & barrera</small></article>
+        <article class="brand-orbit orbit-d"><span>TORRIDEN</span><small>hidratación</small></article>
+        <article class="brand-orbit orbit-e"><span>SKIN1004</span><small>centella</small></article>
+        <article class="brand-orbit orbit-f"><span>CELIMAX</span><small>rutinas suaves</small></article>
+      </div>
+    </section>
+
     <section id="servicios" class="section shell">
       <div class="section-head reveal"><span>01</span><div><p class="eyebrow">SERVICIOS</p><h2>Elige tu experiencia Glow</h2></div></div>
       <div class="tabs"><button class="tab active" data-tab="faciales">Facial</button><button class="tab" data-tab="capilares">Capilar</button></div>
@@ -111,6 +123,16 @@
         <button class="pair" data-pair="Vitamina C + Protector solar|La vitamina C complementa la protección antioxidante; el protector solar sigue siendo indispensable."><b>Vitamina C</b><span>＋</span><b>SPF</b><em>Protección diaria</em></button>
       </div>
 
+      <div class="visual-routine reveal">
+        <div class="routine-sun">☀️<span>AM</span></div>
+        <div class="routine-line"></div>
+        <div class="routine-card rc1"><b>Vitamina C</b><small>Luminosidad</small></div>
+        <div class="routine-card rc2"><b>Niacinamida</b><small>Equilibrio</small></div>
+        <div class="routine-card rc3"><b>SPF</b><small>Protección</small></div>
+        <div class="routine-moon">🌙<span>PM</span></div>
+        <div class="routine-card rc4"><b>Retinol</b><small>Textura</small></div>
+        <div class="routine-card rc5"><b>Ceramidas</b><small>Barrera</small></div>
+      </div>
       <div class="quick-cards">
         <article><span>MITO</span><h3>“La piel grasa no necesita hidratación”</h3><p>Falso. Puede producir grasa y estar deshidratada al mismo tiempo.</p></article>
         <article><span>TIP</span><h3>Un activo a la vez</h3><p>Así podrás reconocer qué producto te ayuda o te irrita.</p></article>
@@ -188,9 +210,10 @@
       <div class="section-head reveal"><span>06</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
       <form id="questionForm" class="question-form">
         <input required name="name" placeholder="Tu nombre">
-        <select required name="category"><option value="">Tema</option><option>Facial</option><option>Capilar</option><option>Reservas</option><option>Productos</option></select>
+        <input name="phone" placeholder="WhatsApp, opcional">
+        <select required name="category"><option value="">Tema</option><option value="facial">Facial</option><option value="capilar">Capilar</option><option value="reservas">Reservas</option><option value="productos">Productos</option><option value="otro">Otro</option></select>
         <textarea required name="question" placeholder="Escribe tu pregunta"></textarea>
-        <button class="btn primary">Enviar por WhatsApp</button>
+        <button class="btn primary">Enviar pregunta</button>
       </form>
       <div class="faq">
         <details><summary>¿Puedo ir maquillada a una limpieza facial?</summary><p>Lo ideal es asistir sin maquillaje, pero si no puedes, se retirará durante la higiene inicial.</p></details>
