@@ -21,3 +21,7 @@ El panel privado será `https://glowbyantho.vercel.app/admin.html`.
 
 ## Seguridad
 Nunca publiques ni compartas la Secret key, service_role key ni contraseña de la base de datos.
+
+
+## Versión 2 visual
+Incluye hero premium, más animaciones y `reset-password.html` para recuperar el acceso cuando Supabase redirige al dominio publicado.
