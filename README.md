@@ -1,10 +1,16 @@
-# Glow by Antho Studio — Final 2.2
+# Glow by Antho Studio — Final 3.0
 
-Versión corregida con:
-- eliminación de la sección “Inspiración K-beauty”;
-- portada con mascarillas Abib reales y sérums flotantes;
-- Mi Rutina Glow diaria con checklist, progreso y constancia;
-- combinador de ingredientes;
-- test, Supabase, panel, reservas, tienda, preguntas y WhatsApp intactos.
+## Definición final
+- Portada premium con productos flotantes, reflejos y fichas al pasar el mouse.
+- Envases inspirados en Anua, Medicube y Torriden.
+- Mascarillas Abib reales con información rápida.
+- Sin franja redundante de nombres de marcas.
+- Mi Rutina Glow con checklist AM/PM, progreso, Glow Score y días de constancia.
+- Recordatorio diario de protector solar.
+- Día semanal de mascarilla.
+- Registro de próxima limpieza.
+- Combinador de ingredientes.
+- Test, Supabase, panel privado, reservas, tienda, preguntas y WhatsApp conservados.
 
-Publicación: extraer, copiar, reemplazar, Commit y Push origin.
+## Publicación
+Extraer, copiar, reemplazar, Commit `Publicar Glow by Antho Final 3.0`, Push origin y recargar con Ctrl + F5.

@@ -32,7 +32,7 @@
   <main>
     <section id="inicio" class="hero shell">
       <div class="hero-copy reveal">
-        <span class="eyebrow">SKIN • HAIR • SELF CARE</span>
+        <span class="eyebrow">RUTINAS REALES • RESULTADOS REALES</span>
         <h1>Tu momento de<br><em>brillar bonito.</em></h1>
         <p>Servicios faciales y capilares personalizados, test orientativos, consejos claros y una experiencia femenina, delicada y profesional.</p>
         <div class="actions">
@@ -45,10 +45,7 @@
           <article><b>Glow Shop</b><small>Compra rápida por WhatsApp</small></article>
           <article><b>Glow Studio</b><small>Seguimiento privado</small></article>
         </div>
-        <div class="brand-ticker" aria-label="Marcas inspiradoras">
-          <span>ANUA</span><i>✦</i><span>MEDICUBE</span><i>✦</i><span>ABIB</span><i>✦</i><span>TORRIDEN</span><i>✦</i><span>SKIN1004</span>
-        </div>
-      </div>
+</div>
 
       <div class="hero-visual reveal" id="parallaxHero">
         <div class="organic-card premium-hero final-hero">
@@ -56,21 +53,26 @@
           <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
           <div class="spark sp1">✦</div><div class="spark sp2">✦</div><div class="spark sp3">♡</div>
 
-          <div class="real-mask mask-sedum" data-depth="20">
+          <div class="real-mask mask-sedum" data-depth="20" tabindex="0">
             <img src="assets/abib-sedum.webp" alt="Mascarilla Abib Sedum Jelly">
+            <div class="product-popover mask-popover"><strong>Abib Sedum Jelly</strong><span>Hidratación intensa y luminosidad.</span></div>
           </div>
-          <div class="real-mask mask-jericho" data-depth="16">
+          <div class="real-mask mask-jericho" data-depth="16" tabindex="0">
             <img src="assets/abib-jericho.webp" alt="Mascarilla Abib Jericho Rose Jelly">
+            <div class="product-popover mask-popover"><strong>Abib Jericho Rose</strong><span>Elasticidad, firmeza y barrera cutánea.</span></div>
           </div>
 
-          <div class="serum-bottle serum-green" data-depth="12">
-            <div class="serum-dropper"></div><b>CALM</b><small>heartleaf care</small>
+          <div class="serum-bottle serum-green" data-depth="12" tabindex="0">
+            <div class="serum-shine"></div><div class="serum-dropper"></div><b>ANUA</b><small>heartleaf care</small>
+            <div class="product-popover"><strong>Calma & equilibrio</strong><span>Inspirado en heartleaf para piel sensible o con rojeces.</span></div>
           </div>
-          <div class="serum-bottle serum-pink" data-depth="24">
-            <div class="serum-dropper"></div><b>GLOW</b><small>vitamin care</small>
+          <div class="serum-bottle serum-pink" data-depth="24" tabindex="0">
+            <div class="serum-shine"></div><div class="serum-dropper"></div><b>MEDICUBE</b><small>vitamin glow</small>
+            <div class="product-popover"><strong>Luminosidad</strong><span>Rutina inspirada en antioxidantes para piel opaca.</span></div>
           </div>
-          <div class="serum-bottle serum-blue" data-depth="18">
-            <div class="serum-dropper"></div><b>HYDRA</b><small>hyaluronic care</small>
+          <div class="serum-bottle serum-blue" data-depth="18" tabindex="0">
+            <div class="serum-shine"></div><div class="serum-dropper"></div><b>TORRIDEN</b><small>hyaluronic care</small>
+            <div class="product-popover"><strong>Hidratación</strong><span>Inspirado en ácido hialurónico para piel deshidratada.</span></div>
           </div>
 
           <div class="badge">K‑beauty mood<br><b>real Glow</b></div>
@@ -121,11 +123,16 @@
         <div class="routine-dashboard reveal">
           <div class="routine-summary">
             <div class="streak-orb"><strong id="streakNumber">0</strong><span>días de constancia</span></div>
-            <div>
+            <div class="routine-main-copy">
               <h3>Tu Glow de hoy</h3>
               <p id="routineDate"></p>
               <div class="routine-progress"><span id="routineProgress"></span></div>
               <small id="routineMessage">Comienza marcando el primer paso.</small>
+            </div>
+            <div class="glow-score">
+              <span>Glow Score</span>
+              <strong id="glowScore">0%</strong>
+              <small>sube al completar tu rutina</small>
             </div>
           </div>
 
@@ -146,6 +153,27 @@
               <label><input type="checkbox" class="routine-check" data-step="pm-hair"> Cuidado capilar o protector de puntas</label>
             </article>
           </div>
+        </div>
+
+        <div class="return-tools reveal">
+          <article class="return-card">
+            <span>⏰</span>
+            <div><b>Recordatorio SPF</b><small>Reaplica protector solar cada 2–3 horas si estás expuesta.</small></div>
+            <button class="mini" id="spfReminder">Marcar recordado</button>
+          </article>
+          <article class="return-card">
+            <span>🫧</span>
+            <div><b>Día de mascarilla</b><small id="maskDayText">Elige un día semanal para tu momento de hidratación.</small></div>
+            <select id="maskDay">
+              <option value="">Elegir día</option>
+              <option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
+            </select>
+          </article>
+          <article class="return-card">
+            <span>📅</span>
+            <div><b>Próxima limpieza</b><small id="nextCleaningText">Registra tu próxima fecha para volver a verla aquí.</small></div>
+            <input id="nextCleaning" type="date">
+          </article>
         </div>
 
         <div class="ingredient-tool reveal">

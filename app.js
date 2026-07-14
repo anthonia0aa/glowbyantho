@@ -174,3 +174,55 @@ if(glowHero){
     box.innerHTML='<b>Pueden convivir en una rutina bien organizada.</b> Comienza con baja frecuencia y detén el uso si notas ardor, descamación o irritación persistente.';
   });
 })();
+
+
+// FINAL 3.0 — Glow Score + herramientas para volver a la página
+(function enhanceGlowRoutine(){
+  const checks=[...document.querySelectorAll('.routine-check')];
+  const score=document.querySelector('#glowScore');
+  if(checks.length&&score){
+    const updateScore=()=>{
+      const pct=Math.round(checks.filter(x=>x.checked).length/checks.length*100);
+      score.textContent=pct+'%';
+    };
+    checks.forEach(c=>c.addEventListener('change',updateScore));
+    updateScore();
+  }
+
+  const spfButton=document.querySelector('#spfReminder');
+  if(spfButton){
+    const key='glowSpfReminderDate';
+    const today=new Date().toISOString().slice(0,10);
+    const syncSpf=()=>{
+      const done=localStorage.getItem(key)===today;
+      spfButton.textContent=done?'Recordatorio completado ✓':'Marcar recordado';
+      spfButton.closest('.return-card')?.classList.toggle('completed',done);
+    };
+    spfButton.addEventListener('click',()=>{localStorage.setItem(key,today);syncSpf()});
+    syncSpf();
+  }
+
+  const maskDay=document.querySelector('#maskDay');
+  const maskText=document.querySelector('#maskDayText');
+  if(maskDay&&maskText){
+    const saved=localStorage.getItem('glowMaskDay')||'';
+    maskDay.value=saved;
+    const render=()=>maskText.textContent=maskDay.value?`Tu momento de mascarilla será cada ${maskDay.value.toLowerCase()} 💗`:'Elige un día semanal para tu momento de hidratación.';
+    maskDay.addEventListener('change',()=>{localStorage.setItem('glowMaskDay',maskDay.value);render()});
+    render();
+  }
+
+  const cleaning=document.querySelector('#nextCleaning');
+  const cleaningText=document.querySelector('#nextCleaningText');
+  if(cleaning&&cleaningText){
+    const saved=localStorage.getItem('glowNextCleaning')||'';
+    cleaning.value=saved;
+    const render=()=>{
+      if(!cleaning.value){cleaningText.textContent='Registra tu próxima fecha para volver a verla aquí.';return}
+      const date=new Date(cleaning.value+'T12:00:00');
+      cleaningText.textContent='Tu próxima limpieza está registrada para el '+new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'long',year:'numeric'}).format(date)+'.';
+    };
+    cleaning.addEventListener('change',()=>{localStorage.setItem('glowNextCleaning',cleaning.value);render()});
+    render();
+  }
+})();
