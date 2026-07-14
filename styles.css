@@ -82,3 +82,110 @@ body{background:radial-gradient(circle at 10% 10%,#fff0f5 0,transparent 30%),rad
   .brand-orbit{display:flex;margin:14px}
   .routine-card{margin:12px 70px}
 }
+
+
+/* =========================================================
+   GLOW BY ANTHO STUDIO V2.0 — HERO K-BEAUTY REALMENTE VISIBLE
+   ========================================================= */
+.kbeauty-hero{overflow:visible!important;transform-style:preserve-3d}
+.kb-product{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 30px 45px rgba(112,72,91,.25),inset 0 0 35px rgba(255,255,255,.72);
+  backdrop-filter:blur(9px);
+  font-size:10px;letter-spacing:.14em;color:#5d4852;
+  transform-style:preserve-3d;
+  animation:kbFloat 5.3s ease-in-out infinite;
+  transition:translate .25s ease,filter .25s ease;
+  z-index:7
+}
+.kb-product:hover{filter:brightness(1.05);z-index:12}
+.kb-product b{font-size:12px}.kb-product small{font-size:7px;margin-top:8px;opacity:.72}
+.kb-cap{
+  position:absolute;top:-40px;width:42px;height:45px;border-radius:11px 11px 7px 7px;
+  background:linear-gradient(180deg,#80646f,#604a53);
+  box-shadow:inset 0 0 10px rgba(255,255,255,.18)
+}
+.kb-anua{
+  left:8%;bottom:80px;width:100px;height:190px;border-radius:24px 24px 34px 34px;
+  background:linear-gradient(180deg,rgba(251,255,247,.96),rgba(211,231,190,.94));
+  rotate:-8deg;animation-delay:-.9s
+}
+.kb-medicube{
+  left:37%;bottom:60px;width:126px;height:226px;border-radius:29px 29px 40px 40px;
+  background:linear-gradient(180deg,rgba(255,248,251,.97),rgba(239,177,201,.96));
+  rotate:3deg;animation-delay:-2.1s
+}
+.kb-abib{
+  right:7%;bottom:86px;width:94px;height:180px;border-radius:22px 22px 33px 33px;
+  background:linear-gradient(180deg,rgba(250,253,255,.98),rgba(191,225,238,.96));
+  rotate:8deg;animation-delay:-1.4s
+}
+.kb-torriden{
+  left:29%;top:72px;width:72px;height:132px;border-radius:19px 19px 28px 28px;
+  background:linear-gradient(180deg,rgba(247,254,255,.96),rgba(160,221,233,.94));
+  rotate:-4deg;animation-delay:-3s
+}
+.kb-skin1004{
+  right:23%;top:70px;width:70px;height:128px;border-radius:18px 18px 27px 27px;
+  background:linear-gradient(180deg,rgba(255,254,246,.98),rgba(224,202,145,.94));
+  rotate:5deg;animation-delay:-1.7s
+}
+.kb-torriden .kb-cap,.kb-skin1004 .kb-cap{top:-29px;width:31px;height:33px;border-radius:9px}
+@keyframes kbFloat{
+  0%,100%{transform:translateY(0) rotateX(0deg)}
+  50%{transform:translateY(-17px) rotateX(2deg)}
+}
+.brand-ticker{
+  margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.15em;font-weight:700;color:#9e687d
+}
+.brand-ticker i{font-style:normal;color:#e8a4bc}
+.kbeauty-strip .brand-cloud{box-shadow:0 30px 70px rgba(150,91,117,.14)}
+@media(max-width:920px){
+  .kb-torriden,.kb-skin1004{display:none}
+  .kb-anua{left:4%;bottom:58px}
+  .kb-medicube{left:35%;bottom:45px}
+  .kb-abib{right:2%;bottom:62px}
+}
+@media(max-width:560px){
+  .kb-product{scale:.74}
+  .kb-anua{left:-6%;bottom:35px}
+  .kb-medicube{left:29%;bottom:25px}
+  .kb-abib{right:-10%;bottom:42px}
+  .brand-ticker{justify-content:center}
+}
+
+/* ===== FINAL 2.1: portada útil + Mi Rutina Glow ===== */
+.kbeauty-strip{display:none!important}
+.final-hero{overflow:visible!important}
+.real-mask{position:absolute;z-index:7;animation:maskFloat 5.8s ease-in-out infinite;filter:drop-shadow(0 26px 22px rgba(104,71,86,.24));transition:translate .25s ease}
+.real-mask img{display:block;width:100%;height:100%;object-fit:contain}
+.mask-sedum{width:170px;height:210px;right:4%;bottom:36px;rotate:8deg;animation-delay:-1.5s}
+.mask-jericho{width:155px;height:198px;left:3%;top:40px;rotate:-8deg;animation-delay:-3s}
+.serum-bottle{position:absolute;z-index:8;width:96px;height:185px;border-radius:25px 25px 35px 35px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 30px 42px rgba(114,76,93,.24),inset 0 0 28px rgba(255,255,255,.74);letter-spacing:.13em;animation:maskFloat 5s ease-in-out infinite;transition:translate .25s ease}
+.serum-bottle b{font-size:13px}.serum-bottle small{font-size:8px;margin-top:8px;opacity:.68}.serum-dropper{position:absolute;top:-45px;width:42px;height:49px;border-radius:12px 12px 8px 8px;background:linear-gradient(#80636f,#5e4851)}
+.serum-green{left:20%;bottom:70px;background:linear-gradient(#fafff7,#cfe3bd);rotate:-5deg}
+.serum-pink{left:43%;bottom:48px;width:112px;height:215px;background:linear-gradient(#fff9fb,#efb2ca);rotate:3deg;animation-delay:-2s}
+.serum-blue{right:24%;top:65px;width:82px;height:150px;background:linear-gradient(#fbfeff,#bfe4ef);rotate:5deg;animation-delay:-3.2s}
+.serum-blue .serum-dropper{top:-34px;width:34px;height:38px}
+@keyframes maskFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-17px)}}
+
+.routine-zone{background:linear-gradient(145deg,#fff7fa,#f5f9fc 52%,#f7f1fb)}
+.routine-dashboard{background:rgba(255,255,255,.82);border:1px solid #ead6df;border-radius:32px;padding:28px;box-shadow:0 24px 55px rgba(136,87,108,.12);backdrop-filter:blur(14px)}
+.routine-summary{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-bottom:24px}
+.streak-orb{width:135px;height:135px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#f2b4ca,#d9edf3);color:white;box-shadow:0 20px 35px rgba(151,91,117,.2)}
+.streak-orb strong{font-family:"Playfair Display";font-size:46px;line-height:1}.streak-orb span{font-size:10px;text-align:center;max-width:75px;margin-top:6px}
+.routine-progress{height:10px;background:#f2dfe7;border-radius:999px;overflow:hidden;margin:12px 0}.routine-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#d9799a,#a9dce6);border-radius:999px;transition:.4s}
+.daily-routines{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.daily-card{padding:24px;border-radius:25px;border:1px solid #ead7df;display:grid;gap:12px}.morning-card{background:linear-gradient(145deg,#fff8e9,#fff)}.night-card{background:linear-gradient(145deg,#f1edff,#fff)}
+.daily-title{display:flex;gap:12px;align-items:center;margin-bottom:7px}.daily-title>span{font-size:30px}.daily-title small{display:block;color:#8c7781;margin-top:3px}
+.daily-card label{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.72);cursor:pointer}.daily-card input{accent-color:#d9799a;width:18px;height:18px}
+.daily-card label.completed{text-decoration:line-through;opacity:.58}
+
+.ingredient-tool{margin-top:25px;padding:28px;border-radius:30px;background:white;border:1px solid #ead7df;box-shadow:0 18px 40px rgba(132,85,104,.09)}
+.ingredient-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}.ingredient-controls select{flex:1;min-width:190px;padding:13px 15px;border:1px solid #e8d3dc;border-radius:15px;background:#fff;font:inherit}
+.ingredient-result{padding:18px;border-radius:18px;background:#fff3f7;border:1px solid #efd4df;line-height:1.55}.ingredient-result.good{background:#edf8ef;border-color:#cbe5cf}.ingredient-result.caution{background:#fff8df;border-color:#eadba4}
+@media(max-width:920px){.mask-jericho{display:none}.mask-sedum{width:145px;right:-3%}.serum-green{left:4%}.serum-pink{left:34%}.serum-blue{right:11%}}
+@media(max-width:650px){.routine-summary{grid-template-columns:1fr;text-align:center}.streak-orb{margin:auto}.daily-routines{grid-template-columns:1fr}.ingredient-controls{display:grid}.ingredient-controls span{display:none}.mask-sedum{display:none}.serum-green{left:-4%;scale:.78}.serum-pink{left:29%;scale:.82}.serum-blue{right:-2%;scale:.78}}

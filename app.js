@@ -80,28 +80,97 @@ $('#questionForm').onsubmit=async e=>{
   e.target.reset();
   toast('Pregunta enviada a Antho ✨');
 };
-// Portada interactiva: movimiento suave de los productos con el mouse
-const heroStage=document.querySelector('#parallaxHero');
-if(heroStage){
-  heroStage.addEventListener('mousemove',e=>{
-    const rect=heroStage.getBoundingClientRect();
-    const x=(e.clientX-rect.left)/rect.width-.5;
-    const y=(e.clientY-rect.top)/rect.height-.5;
-    heroStage.querySelectorAll('[data-depth]').forEach(el=>{
-      const depth=Number(el.dataset.depth||10);
-      el.style.translate=`${x*depth}px ${y*depth}px`;
+
+
+// Glow Hero V2.0: profundidad suave, sin afectar las funciones del sitio
+const glowHero=document.querySelector('#parallaxHero');
+if(glowHero){
+  glowHero.addEventListener('mousemove',(event)=>{
+    const rect=glowHero.getBoundingClientRect();
+    const px=(event.clientX-rect.left)/rect.width-.5;
+    const py=(event.clientY-rect.top)/rect.height-.5;
+    glowHero.querySelectorAll('[data-depth]').forEach(product=>{
+      const depth=Number(product.dataset.depth||10);
+      product.style.translate=`${px*depth}px ${py*depth}px`;
     });
   });
-  heroStage.addEventListener('mouseleave',()=>{
-    heroStage.querySelectorAll('[data-depth]').forEach(el=>el.style.translate='0 0');
+  glowHero.addEventListener('mouseleave',()=>{
+    glowHero.querySelectorAll('[data-depth]').forEach(product=>{
+      product.style.translate='0 0';
+    });
   });
 }
-document.querySelectorAll('.service-card,.product-card,.ingredient,.pair').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    const rx=((e.clientY-r.top)/r.height-.5)*-4;
-    const ry=((e.clientX-r.left)/r.width-.5)*4;
-    card.style.transform=`translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+
+// Mi Rutina Glow: guardado diario en el dispositivo
+(function initGlowRoutine(){
+  const checks=[...document.querySelectorAll('.routine-check')];
+  if(!checks.length)return;
+  const today=new Date().toISOString().slice(0,10);
+  const dateLabel=document.querySelector('#routineDate');
+  if(dateLabel) dateLabel.textContent=new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+
+  let saved={};
+  try{saved=JSON.parse(localStorage.getItem('glowRoutineToday')||'{}')}catch(e){}
+  if(saved.date!==today)saved={date:today,steps:{}};
+
+  const update=()=>{
+    checks.forEach(c=>{
+      c.checked=Boolean(saved.steps[c.dataset.step]);
+      c.closest('label')?.classList.toggle('completed',c.checked);
+    });
+    const done=checks.filter(c=>c.checked).length;
+    const pct=Math.round(done/checks.length*100);
+    const bar=document.querySelector('#routineProgress');
+    if(bar)bar.style.width=pct+'%';
+    const message=document.querySelector('#routineMessage');
+    if(message)message.textContent=pct===100?'¡Rutina completa! Tu constancia también es parte del glow ✨':pct>=50?'Vas muy bien, ya completaste más de la mitad 💗':'Comienza marcando cada paso que realices.';
+    if(pct===100&&!saved.completed){
+      saved.completed=true;
+      const last=localStorage.getItem('glowLastCompleted');
+      let streak=Number(localStorage.getItem('glowStreak')||0);
+      const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+      streak=last===yesterday?streak+1:(last===today?streak:1);
+      localStorage.setItem('glowStreak',String(streak));
+      localStorage.setItem('glowLastCompleted',today);
+    }
+    localStorage.setItem('glowRoutineToday',JSON.stringify(saved));
+    const streakNumber=document.querySelector('#streakNumber');
+    if(streakNumber)streakNumber.textContent=localStorage.getItem('glowStreak')||0;
+  };
+  checks.forEach(c=>c.addEventListener('change',()=>{saved.steps[c.dataset.step]=c.checked;update()}));
+  update();
+})();
+
+// Combinador rápido de ingredientes
+(function initIngredientTool(){
+  const button=document.querySelector('#checkIngredients');
+  if(!button)return;
+  const safeHydrators=['Ácido hialurónico','Ceramidas','Niacinamida'];
+  const separatePairs=[
+    ['Retinol','Ácido glicólico'],['Retinol','Ácido salicílico'],
+    ['Ácido glicólico','Ácido salicílico'],['Retinol','Vitamina C']
+  ];
+  button.addEventListener('click',()=>{
+    const one=document.querySelector('#ingredientOne').value;
+    const two=document.querySelector('#ingredientTwo').value;
+    const box=document.querySelector('#ingredientResult');
+    box.className='ingredient-result';
+    if(!one||!two){box.textContent='Selecciona dos ingredientes para revisar la combinación.';return}
+    if(one===two){box.classList.add('caution');box.innerHTML='<b>No necesitas duplicarlo.</b> Usar dos productos con el mismo activo puede aumentar irritación sin aportar un beneficio extra.';return}
+    const pair=[one,two];
+    const mustSeparate=separatePairs.some(p=>p.every(x=>pair.includes(x)));
+    if(mustSeparate){
+      box.classList.add('caution');
+      box.innerHTML='<b>Mejor separarlos.</b> Úsalos en noches distintas o uno por la mañana y otro por la noche, especialmente si tu piel es sensible o principiante.';
+      return;
+    }
+    if(pair.some(x=>safeHydrators.includes(x))){
+      box.classList.add('good');
+      box.innerHTML='<b>Combinación generalmente compatible.</b> Introduce los productos poco a poco y ajusta la frecuencia según tolerancia.';
+      return;
+    }
+    box.classList.add('good');
+    box.innerHTML='<b>Pueden convivir en una rutina bien organizada.</b> Comienza con baja frecuencia y detén el uso si notas ardor, descamación o irritación persistente.';
   });
-  card.addEventListener('mouseleave',()=>card.style.transform='');
-});
+})();

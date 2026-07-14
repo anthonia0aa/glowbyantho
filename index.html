@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Glow by Antho</title>
+  <title>Glow by Antho Studio | Skin, Hair & K‑Beauty</title>
   <meta name="description" content="Limpiezas faciales, tratamientos capilares, test, reservas y tienda Glow by Antho.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
       <div id="navLinks" class="nav-links">
         <a href="#servicios">Servicios</a>
         <a href="#tests">Tests</a>
-        <a href="#guia">Glow Guide</a>
+        <a href="#rutina">Mi Rutina</a><a href="#guia">Glow Guide</a>
         <a href="#resultados">Resultados</a>
         <a href="#tienda">Tienda</a>
         <a href="#preguntas">Preguntas</a>
@@ -40,39 +40,49 @@
           <a href="#tests" class="btn ghost">Hacer mi test</a>
         </div>
         <div class="proof"><span>♡ Atención personalizada</span><span>♡ Compra por WhatsApp</span><span>♡ Resultados reales</span></div>
-        <div class="hero-microcards"><article><b>Glow Match</b><small>Orientación facial y capilar</small></article><article><b>Glow Shop</b><small>Compra rápida por WhatsApp</small></article><article><b>Glow Studio</b><small>Seguimiento privado</small></article></div>
+        <div class="hero-microcards">
+          <article><b>Glow Match</b><small>Orientación facial y capilar</small></article>
+          <article><b>Glow Shop</b><small>Compra rápida por WhatsApp</small></article>
+          <article><b>Glow Studio</b><small>Seguimiento privado</small></article>
+        </div>
+        <div class="brand-ticker" aria-label="Marcas inspiradoras">
+          <span>ANUA</span><i>✦</i><span>MEDICUBE</span><i>✦</i><span>ABIB</span><i>✦</i><span>TORRIDEN</span><i>✦</i><span>SKIN1004</span>
+        </div>
       </div>
 
-      <div class="hero-visual reveal">
-        <div class="organic-card premium-hero">
+      <div class="hero-visual reveal" id="parallaxHero">
+        <div class="organic-card premium-hero final-hero">
           <div class="hero-ring ring-1"></div><div class="hero-ring ring-2"></div>
-          <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
-          <div class="dropper d1"><span>GLOW</span></div>
-          <div class="dropper d2"><span>HAIR</span></div>
+          <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
           <div class="spark sp1">✦</div><div class="spark sp2">✦</div><div class="spark sp3">♡</div>
-          <div class="badge">soft care<br><b>real glow</b></div>
-          <div class="floating-chip chip-1">Hidratación ✦</div>
-          <div class="floating-chip chip-2">Glow Skin ♡</div>
-          <div class="floating-chip chip-3">Hair Ritual ✨</div>
+
+          <div class="real-mask mask-sedum" data-depth="20">
+            <img src="assets/abib-sedum.webp" alt="Mascarilla Abib Sedum Jelly">
+          </div>
+          <div class="real-mask mask-jericho" data-depth="16">
+            <img src="assets/abib-jericho.webp" alt="Mascarilla Abib Jericho Rose Jelly">
+          </div>
+
+          <div class="serum-bottle serum-green" data-depth="12">
+            <div class="serum-dropper"></div><b>CALM</b><small>heartleaf care</small>
+          </div>
+          <div class="serum-bottle serum-pink" data-depth="24">
+            <div class="serum-dropper"></div><b>GLOW</b><small>vitamin care</small>
+          </div>
+          <div class="serum-bottle serum-blue" data-depth="18">
+            <div class="serum-dropper"></div><b>HYDRA</b><small>hyaluronic care</small>
+          </div>
+
+          <div class="badge">K‑beauty mood<br><b>real Glow</b></div>
+          <div class="floating-chip chip-1">Calma ✦</div>
+          <div class="floating-chip chip-2">Hidratación ♡</div>
+          <div class="floating-chip chip-3">Glass skin ✨</div>
         </div>
       </div>
     </section>
 
     <div class="marquee"><div>FACIAL CARE ✦ HAIR GLOW ✦ SKIN JOURNEY ✦ K-BEAUTY ✦ RESERVAS ✦</div></div>
-
-    <section class="section kbeauty-strip shell">
-      <div class="section-head reveal"><span>00</span><div><p class="eyebrow">FAVORITOS GLOW</p><h2>Inspiración K‑beauty</h2><p>Una selección visual de marcas y activos que inspiran el universo de Glow by Antho.</p></div></div>
-      <div class="brand-cloud reveal">
-        <article class="brand-orbit orbit-a"><span>ANUA</span><small>calma & equilibrio</small></article>
-        <article class="brand-orbit orbit-b"><span>MEDICUBE</span><small>textura & glow</small></article>
-        <article class="brand-orbit orbit-c"><span>ABIB</span><small>hidrogel & barrera</small></article>
-        <article class="brand-orbit orbit-d"><span>TORRIDEN</span><small>hidratación</small></article>
-        <article class="brand-orbit orbit-e"><span>SKIN1004</span><small>centella</small></article>
-        <article class="brand-orbit orbit-f"><span>CELIMAX</span><small>rutinas suaves</small></article>
-      </div>
-    </section>
-
-    <section id="servicios" class="section shell">
+<section id="servicios" class="section shell">
       <div class="section-head reveal"><span>01</span><div><p class="eyebrow">SERVICIOS</p><h2>Elige tu experiencia Glow</h2></div></div>
       <div class="tabs"><button class="tab active" data-tab="faciales">Facial</button><button class="tab" data-tab="capilares">Capilar</button></div>
 
@@ -103,8 +113,70 @@
       </div>
     </section>
 
+    
+    <section id="rutina" class="section routine-zone">
+      <div class="shell">
+        <div class="section-head reveal"><span>03</span><div><p class="eyebrow">MI RUTINA GLOW</p><h2>Vuelve cada día y marca tu cuidado</h2><p>Una guía simple para mantener constancia. Tus marcas quedan guardadas en este dispositivo durante el día.</p></div></div>
+
+        <div class="routine-dashboard reveal">
+          <div class="routine-summary">
+            <div class="streak-orb"><strong id="streakNumber">0</strong><span>días de constancia</span></div>
+            <div>
+              <h3>Tu Glow de hoy</h3>
+              <p id="routineDate"></p>
+              <div class="routine-progress"><span id="routineProgress"></span></div>
+              <small id="routineMessage">Comienza marcando el primer paso.</small>
+            </div>
+          </div>
+
+          <div class="daily-routines">
+            <article class="daily-card morning-card">
+              <div class="daily-title"><span>☀️</span><div><b>Rutina de mañana</b><small>Protección y luminosidad</small></div></div>
+              <label><input type="checkbox" class="routine-check" data-step="am-cleanser"> Limpiador suave</label>
+              <label><input type="checkbox" class="routine-check" data-step="am-serum"> Sérum hidratante o antioxidante</label>
+              <label><input type="checkbox" class="routine-check" data-step="am-cream"> Crema hidratante</label>
+              <label><input type="checkbox" class="routine-check" data-step="am-spf"> Protector solar</label>
+            </article>
+
+            <article class="daily-card night-card">
+              <div class="daily-title"><span>🌙</span><div><b>Rutina de noche</b><small>Limpieza y reparación</small></div></div>
+              <label><input type="checkbox" class="routine-check" data-step="pm-cleanser"> Limpieza del rostro</label>
+              <label><input type="checkbox" class="routine-check" data-step="pm-treatment"> Tratamiento según necesidad</label>
+              <label><input type="checkbox" class="routine-check" data-step="pm-cream"> Hidratante o crema reparadora</label>
+              <label><input type="checkbox" class="routine-check" data-step="pm-hair"> Cuidado capilar o protector de puntas</label>
+            </article>
+          </div>
+        </div>
+
+        <div class="ingredient-tool reveal">
+          <div>
+            <p class="eyebrow">COMBINADOR DE ACTIVOS</p>
+            <h3>¿Puedo usar estos ingredientes juntos?</h3>
+            <p>Selecciona dos ingredientes y revisa una orientación rápida.</p>
+          </div>
+          <div class="ingredient-controls">
+            <select id="ingredientOne">
+              <option value="">Primer ingrediente</option>
+              <option>Vitamina C</option><option>Niacinamida</option><option>Ácido hialurónico</option>
+              <option>Retinol</option><option>Ácido salicílico</option><option>Ácido glicólico</option>
+              <option>Ceramidas</option>
+            </select>
+            <span>＋</span>
+            <select id="ingredientTwo">
+              <option value="">Segundo ingrediente</option>
+              <option>Vitamina C</option><option>Niacinamida</option><option>Ácido hialurónico</option>
+              <option>Retinol</option><option>Ácido salicílico</option><option>Ácido glicólico</option>
+              <option>Ceramidas</option>
+            </select>
+            <button id="checkIngredients" class="btn primary">Revisar combinación</button>
+          </div>
+          <div id="ingredientResult" class="ingredient-result">Elige dos ingredientes para comenzar.</div>
+        </div>
+      </div>
+    </section>
+
     <section id="guia" class="section shell">
-      <div class="section-head reveal"><span>03</span><div><p class="eyebrow">GLOW GUIDE</p><h2>Skincare sin aburrirse</h2><p>Tarjetas cortas, visuales e interactivas.</p></div></div>
+      <div class="section-head reveal"><span>04</span><div><p class="eyebrow">GLOW GUIDE</p><h2>Skincare sin aburrirse</h2><p>Tarjetas cortas, visuales e interactivas.</p></div></div>
 
       <div class="ingredient-grid">
         <button class="ingredient peach" data-title="Vitamina C" data-text="Mañana · 1 vez al día. Ayuda a iluminar y complementar la protección antioxidante. Siempre usar protector solar."><span>☀️</span><b>Vitamina C</b><small>1 vez al día</small></button>
@@ -153,7 +225,7 @@
     </section>
 
     <section id="tienda" class="section shell">
-      <div class="section-head reveal"><span>05</span><div><p class="eyebrow">GLOW SHOP</p><h2>Mascarillas Abib</h2><p>Arma tu carrito y envíalo listo por WhatsApp. El despacho por Starken se paga al recibir.</p></div></div>
+      <div class="section-head reveal"><span>06</span><div><p class="eyebrow">GLOW SHOP</p><h2>Mascarillas Abib</h2><p>Arma tu carrito y envíalo listo por WhatsApp. El despacho por Starken se paga al recibir.</p></div></div>
 
       <div class="shop-grid">
         <article class="product-card">
@@ -207,7 +279,7 @@
     </section>
 
     <section id="preguntas" class="section shell">
-      <div class="section-head reveal"><span>06</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
+      <div class="section-head reveal"><span>07</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
       <form id="questionForm" class="question-form">
         <input required name="name" placeholder="Tu nombre">
         <input name="phone" placeholder="WhatsApp, opcional">
