@@ -66,6 +66,8 @@ function updateCart(){$('#cartCount').textContent=cart.reduce((n,x)=>n+x.qty,0)}
 $('#cartBtn').onclick=()=>{if(!cart.length){openModal('<h2>Tu carrito está vacío</h2>');return}const total=cart.reduce((n,x)=>n+x.price*x.qty,0);openModal(`<p class="eyebrow">TU CARRITO</p><h2>Glow Shop</h2>${cart.map(x=>`<p>${x.qty} × ${x.name} <b>$${(x.qty*x.price).toLocaleString('es-CL')}</b></p>`).join('')}<h3>Total: $${total.toLocaleString('es-CL')}</h3><form id="orderForm"><input required name="name" placeholder="Nombre completo"><input required name="phone" placeholder="WhatsApp"><input name="rut" placeholder="RUT"><input required name="region" placeholder="Región"><input required name="commune" placeholder="Comuna"><input required name="destination" placeholder="Dirección o sucursal Starken"><button class="btn primary">Comprar por WhatsApp</button></form><small>El despacho se paga al recibir.</small>`);$('#orderForm').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));await db.from('orders').insert({client_name:d.name,rut:d.rut||null,phone:d.phone,region:d.region,commune:d.commune,starken_destination:d.destination,items:cart,products_total:total});const lines=cart.map(x=>`• ${x.name} x${x.qty} — $${(x.price*x.qty).toLocaleString('es-CL')}`).join('\n');window.open(wa(`Hola, vengo desde la página de Glow by Antho 💗\n\nQuisiera comprar:\n${lines}\n\nTotal productos: $${total.toLocaleString('es-CL')}\n\nNombre: ${d.name}\nRUT: ${d.rut}\nTeléfono: ${d.phone}\nRegión: ${d.region}\nComuna: ${d.commune}\nDirección o sucursal Starken: ${d.destination}\n\nEntiendo que el despacho se paga al recibir.`),'_blank')}};
 
 $('#bookingForm').onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),opt=$('#serviceSelect').selectedOptions[0],abono=+(opt?.dataset.abono||0);const {error}=await db.from('bookings').insert({client_name:d.name,phone:d.phone,service:d.service,appointment_date:d.date,appointment_time:d.time,deposit_amount:abono,estimated_price_text:`Abono desde $${abono.toLocaleString('es-CL')}`,notes:d.notes||null,status:'pendiente'});if(error){toast('No se pudo guardar la reserva');return}window.open(wa(`Hola, vengo desde la página de Glow by Antho y quisiera reservar 💗\n\nNombre: ${d.name}\nTeléfono: ${d.phone}\nServicio: ${d.service}\nFecha: ${d.date}\nHora: ${d.time}\nComentario: ${d.notes||'Sin comentario'}\n\nAbono informado: $${abono.toLocaleString('es-CL')}\nEntiendo que este monto corresponde solamente al abono.`),'_blank');toast('Reserva registrada')};
+
+// Preguntas públicas + formulario
 $('#questionForm').onsubmit=async e=>{
   e.preventDefault();
   const d=Object.fromEntries(new FormData(e.target));
@@ -74,15 +76,80 @@ $('#questionForm').onsubmit=async e=>{
     phone:d.phone||null,
     category:d.category,
     question:d.question,
-    status:'pendiente'
+    status:'pendiente',
+    is_public:false
   });
   if(error){toast('No se pudo enviar la pregunta');return}
   e.target.reset();
   toast('Pregunta enviada a Antho ✨');
 };
 
+const toggleQuestions=$('#toggleQuestions');
+const questionsDrawer=$('#questionsDrawer');
+if(toggleQuestions) toggleQuestions.onclick=()=>{questionsDrawer.classList.toggle('hidden');if(!questionsDrawer.classList.contains('hidden')) loadPublicQuestions()};
+if($('#closeQuestions')) $('#closeQuestions').onclick=()=>questionsDrawer.classList.add('hidden');
 
-// Glow Hero V2.0: profundidad suave, sin afectar las funciones del sitio
+async function loadPublicQuestions(){
+  const list=$('#publicQuestionsList');
+  if(!list)return;
+  list.innerHTML='<p class="questions-loading">Cargando preguntas…</p>';
+  const {data:questions,error}=await db.from('questions')
+    .select('id,client_name,category,question,answer,answered_at,created_at')
+    .eq('is_public',true)
+    .eq('status','respondida')
+    .order('answered_at',{ascending:false});
+  if(error){list.innerHTML='<p class="questions-empty">Aún no se pudieron cargar las preguntas.</p>';return}
+  if(!questions?.length){list.innerHTML='<p class="questions-empty">Todavía no hay preguntas respondidas públicamente.</p>';return}
+
+  const ids=questions.map(q=>q.id);
+  let comments=[];
+  const {data:commentData}=await db.from('question_comments')
+    .select('id,question_id,name,comment,created_at')
+    .in('question_id',ids)
+    .eq('approved',true)
+    .order('created_at',{ascending:true});
+  comments=commentData||[];
+
+  list.innerHTML=questions.map(q=>{
+    const qComments=comments.filter(c=>c.question_id===q.id);
+    const date=new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'short',year:'numeric'}).format(new Date(q.answered_at||q.created_at));
+    return `<details class="public-question">
+      <summary>
+        <span class="public-question-title"><b>${escapeHtml(q.question)}</b><small>${escapeHtml(q.client_name)} · ${escapeHtml(q.category)} · ${date}</small></span>
+        <span class="public-question-status">Respondida por Antho</span>
+      </summary>
+      <div class="public-question-content">
+        <div class="official-answer"><strong>💗 Respuesta de Antho</strong><p>${escapeHtml(q.answer||'')}</p></div>
+        <div class="comments-list">${qComments.length?qComments.map(c=>`<div class="public-comment"><b>${escapeHtml(c.name)}:</b> ${escapeHtml(c.comment)}</div>`).join(''):'<small>Aún no hay comentarios aprobados.</small>'}</div>
+        <form class="comment-form" data-question-id="${q.id}">
+          <input required name="name" placeholder="Tu nombre">
+          <input required name="comment" placeholder="Escribe un comentario">
+          <button>Comentar</button>
+        </form>
+      </div>
+    </details>`;
+  }).join('');
+
+  $$('.comment-form',list).forEach(form=>form.onsubmit=async e=>{
+    e.preventDefault();
+    const d=Object.fromEntries(new FormData(form));
+    const {error:commentError}=await db.from('question_comments').insert({
+      question_id:form.dataset.questionId,
+      name:d.name,
+      comment:d.comment,
+      approved:false
+    });
+    if(commentError){toast('No se pudo enviar el comentario');return}
+    form.reset();
+    toast('Comentario enviado para revisión ✨');
+  });
+}
+
+function escapeHtml(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+}
+
+// Hero interactivo
 const glowHero=document.querySelector('#parallaxHero');
 if(glowHero){
   glowHero.addEventListener('mousemove',(event)=>{
@@ -94,37 +161,47 @@ if(glowHero){
       product.style.translate=`${px*depth}px ${py*depth}px`;
     });
   });
-  glowHero.addEventListener('mouseleave',()=>{
-    glowHero.querySelectorAll('[data-depth]').forEach(product=>{
-      product.style.translate='0 0';
-    });
-  });
+  glowHero.addEventListener('mouseleave',()=>glowHero.querySelectorAll('[data-depth]').forEach(product=>product.style.translate='0 0'));
 }
 
-
-// Mi Rutina Glow: guardado diario en el dispositivo
-(function initGlowRoutine(){
+// Mi Rutina: una sola fuente de verdad para progreso, constancia y planta
+(function initRoutine(){
   const checks=[...document.querySelectorAll('.routine-check')];
   if(!checks.length)return;
   const today=new Date().toISOString().slice(0,10);
-  const dateLabel=document.querySelector('#routineDate');
-  if(dateLabel) dateLabel.textContent=new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+  const dateLabel=$('#routineDate');
+  if(dateLabel)dateLabel.textContent=new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
 
-  let saved={};
-  try{saved=JSON.parse(localStorage.getItem('glowRoutineToday')||'{}')}catch(e){}
-  if(saved.date!==today)saved={date:today,steps:{}};
+  let saved={date:today,steps:{},completed:false};
+  try{
+    const parsed=JSON.parse(localStorage.getItem('glowRoutineToday')||'{}');
+    if(parsed.date===today)saved=parsed;
+  }catch(e){}
 
-  const update=()=>{
+  const stages=[
+    ['Semillita Glow','Tu progreso recién comienza.'],
+    ['Primer brote','Ya diste tus primeros pasos.'],
+    ['En crecimiento','Tu constancia comienza a notarse.'],
+    ['Hojitas de constancia','Tu rutina está tomando forma.'],
+    ['Primera flor','Ya casi completas tu cuidado del día.'],
+    ['Rutina florecida','¡Completaste todos tus pasos de hoy!']
+  ];
+
+  const render=()=>{
     checks.forEach(c=>{
       c.checked=Boolean(saved.steps[c.dataset.step]);
       c.closest('label')?.classList.toggle('completed',c.checked);
     });
     const done=checks.filter(c=>c.checked).length;
     const pct=Math.round(done/checks.length*100);
-    const bar=document.querySelector('#routineProgress');
-    if(bar)bar.style.width=pct+'%';
-    const message=document.querySelector('#routineMessage');
-    if(message)message.textContent=pct===100?'¡Rutina completa! Tu constancia también es parte del glow ✨':pct>=50?'Vas muy bien, ya completaste más de la mitad 💗':'Comienza marcando cada paso que realices.';
+    const level=Math.min(5,Math.floor(done/checks.length*6));
+    if($('#routineProgress'))$('#routineProgress').style.width=pct+'%';
+    if($('#glowScore'))$('#glowScore').textContent=pct+'%';
+    if($('#routinePlant'))$('#routinePlant').className='routine-plant stage-'+level;
+    if($('#plantStageName'))$('#plantStageName').textContent=stages[level][0];
+    if($('#plantStageText'))$('#plantStageText').textContent=stages[level][1];
+    if($('#routineMessage'))$('#routineMessage').textContent=pct===100?'¡Rutina completa! Tu constancia también es parte del glow ✨':pct>=50?'Vas muy bien, ya completaste más de la mitad 💗':'Comienza marcando cada paso que realices.';
+
     if(pct===100&&!saved.completed){
       saved.completed=true;
       const last=localStorage.getItem('glowLastCompleted');
@@ -134,168 +211,53 @@ if(glowHero){
       localStorage.setItem('glowStreak',String(streak));
       localStorage.setItem('glowLastCompleted',today);
     }
+    if($('#streakNumber'))$('#streakNumber').textContent=localStorage.getItem('glowStreak')||0;
     localStorage.setItem('glowRoutineToday',JSON.stringify(saved));
-    const streakNumber=document.querySelector('#streakNumber');
-    if(streakNumber)streakNumber.textContent=localStorage.getItem('glowStreak')||0;
   };
-  checks.forEach(c=>c.addEventListener('change',()=>{saved.steps[c.dataset.step]=c.checked;update()}));
-  update();
-})();
 
-// FINAL 3.0 — Glow Score + herramientas para volver a la página
-(function enhanceGlowRoutine(){
-  const checks=[...document.querySelectorAll('.routine-check')];
-  const score=document.querySelector('#glowScore');
-  if(checks.length&&score){
-    const updateScore=()=>{
-      const pct=Math.round(checks.filter(x=>x.checked).length/checks.length*100);
-      score.textContent=pct+'%';
-    };
-    checks.forEach(c=>c.addEventListener('change',updateScore));
-    updateScore();
-  }
+  checks.forEach(c=>c.addEventListener('change',()=>{saved.steps[c.dataset.step]=c.checked;render()}));
+  render();
 
-  const spfButton=document.querySelector('#spfReminder');
+  const spfButton=$('#spfReminder');
   if(spfButton){
     const key='glowSpfReminderDate';
-    const today=new Date().toISOString().slice(0,10);
-    const syncSpf=()=>{
+    const sync=()=>{
       const done=localStorage.getItem(key)===today;
-      spfButton.textContent=done?'Recordatorio completado ✓':'Marcar recordado';
-      spfButton.closest('.return-card')?.classList.toggle('completed',done);
+      spfButton.textContent=done?'Protección marcada ✓':'Sí, ya lo hice';
+      spfButton.closest('.return-card-clean')?.classList.toggle('completed',done);
     };
-    spfButton.addEventListener('click',()=>{localStorage.setItem(key,today);syncSpf()});
-    syncSpf();
+    spfButton.onclick=()=>{localStorage.setItem(key,today);sync()};
+    sync();
   }
 
-  const maskDay=document.querySelector('#maskDay');
-  const maskText=document.querySelector('#maskDayText');
+  const maskDay=$('#maskDay'),maskText=$('#maskDayText');
   if(maskDay&&maskText){
-    const saved=localStorage.getItem('glowMaskDay')||'';
-    maskDay.value=saved;
-    const render=()=>maskText.textContent=maskDay.value?`Tu momento de mascarilla será cada ${maskDay.value.toLowerCase()} 💗`:'Elige un día semanal para tu momento de hidratación.';
-    maskDay.addEventListener('change',()=>{localStorage.setItem('glowMaskDay',maskDay.value);render()});
-    render();
+    maskDay.value=localStorage.getItem('glowMaskDay')||'';
+    const sync=()=>maskText.textContent=maskDay.value?`Tu momento de mascarilla será cada ${maskDay.value.toLowerCase()} 💗`:'Elige tu día semanal de hidratación.';
+    maskDay.onchange=()=>{localStorage.setItem('glowMaskDay',maskDay.value);sync()};
+    sync();
   }
 
-  const cleaning=document.querySelector('#nextCleaning');
-  const cleaningText=document.querySelector('#nextCleaningText');
+  const cleaning=$('#nextCleaning'),cleaningText=$('#nextCleaningText');
   if(cleaning&&cleaningText){
-    const saved=localStorage.getItem('glowNextCleaning')||'';
-    cleaning.value=saved;
-    const render=()=>{
-      if(!cleaning.value){cleaningText.textContent='Registra tu próxima fecha para volver a verla aquí.';return}
+    cleaning.value=localStorage.getItem('glowNextCleaning')||'';
+    const sync=()=>{
+      if(!cleaning.value){cleaningText.textContent='Cuando vuelvas desde este dispositivo, tu fecha seguirá aquí.';return}
       const date=new Date(cleaning.value+'T12:00:00');
-      cleaningText.textContent='Tu próxima limpieza está registrada para el '+new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'long',year:'numeric'}).format(date)+'.';
+      cleaningText.textContent='Tu próxima fecha está guardada para el '+new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'long',year:'numeric'}).format(date)+'.';
     };
-    cleaning.addEventListener('change',()=>{localStorage.setItem('glowNextCleaning',cleaning.value);render()});
-    render();
+    cleaning.onchange=()=>{localStorage.setItem('glowNextCleaning',cleaning.value);sync()};
+    sync();
   }
 })();
 
-// VERSIÓN OFICIAL 1.0 — progreso, jardín y contenido diario
-(function initOfficialRoutine(){
-  const checks=[...document.querySelectorAll('.routine-check')];
-  const plant=document.querySelector('#gardenPlant');
-  const stage=document.querySelector('#gardenStage');
-  const score=document.querySelector('#glowScore');
-  const stages=['Semillita Glow','Primer brote','Rutina en crecimiento','Hojitas de constancia','Primera flor','Jardín Glow completo'];
-
-  const syncGarden=()=>{
-    if(!checks.length||!plant)return;
-    const done=checks.filter(c=>c.checked).length;
-    const pct=Math.round(done/checks.length*100);
-    const level=Math.min(5,Math.floor((done/checks.length)*6));
-    plant.className='garden-plant level-'+level;
-    if(stage)stage.textContent=stages[level];
-    if(score)score.textContent=pct+'%';
-  };
-  checks.forEach(c=>c.addEventListener('change',syncGarden));
-  setTimeout(syncGarden,100);
-
-  const tips=[
-    ['Piel tirante no siempre significa piel seca','Si tu piel se siente tirante después de lavarla, también puede estar deshidratada. Usa limpieza suave e hidratación.'],
-    ['Menos puede ser más','Una rutina corta y constante suele funcionar mejor que usar demasiados productos a la vez.'],
-    ['Tu cuello también cuenta','Extiende la hidratación y el protector solar hacia cuello y escote.'],
-    ['La barrera primero','Si todo te arde o irrita, pausa activos fuertes y prioriza productos calmantes e hidratantes.'],
-    ['Dale tiempo a tu rutina','Los cambios reales necesitan constancia. Evita cambiar todos tus productos cada semana.'],
-    ['Protector incluso en días nublados','La radiación UV sigue presente aunque el día se vea gris.'],
-    ['No exfolies de más','Más exfoliación no significa mejores resultados. La irritación puede empeorar textura y brillo.']
-  ];
-
-  const ingredients=[
-    ['Centella asiática','Ayuda a calmar la piel y es una buena aliada cuando la barrera se siente sensible.'],
-    ['Niacinamida','Apoya la barrera y ayuda a equilibrar visualmente la piel.'],
-    ['Ácido hialurónico','Aporta hidratación y funciona mejor si luego sellas con una crema.'],
-    ['Ceramidas','Ayudan a reforzar la barrera y reducir la sensación de tirantez.'],
-    ['Vitamina C','Aporta luminosidad y protección antioxidante durante el día.'],
-    ['Ácido salicílico','Puede ayudar con poros congestionados y puntos negros si se usa con moderación.'],
-    ['Péptidos','Se usan para apoyar una apariencia más suave y cuidada.']
-  ];
-
-  const myths=[
-    ['“La piel grasa no necesita hidratante”','Mito. Una piel grasa también puede estar deshidratada y necesitar una crema ligera.'],
-    ['“Mientras más espuma, mejor limpia”','Mito. Mucha espuma no garantiza una mejor limpieza y puede resecar algunas pieles.'],
-    ['“El protector solar es solo para el verano”','Mito. Se recomienda usarlo todos los días.'],
-    ['“Los poros se abren y se cierran”','Mito. Pueden verse más o menos notorios, pero no funcionan como puertas.'],
-    ['“Ardor significa que el producto está funcionando”','Mito. El ardor intenso puede indicar irritación.'],
-    ['“Dormir con maquillaje una vez no importa”','Mito. Puede favorecer irritación y obstrucción.'],
-    ['“El cabello se acostumbra al shampoo”','No exactamente. Sus necesidades pueden cambiar por clima, procesos y acumulación.']
-  ];
-
-  const antho=[
-    'Si recién comienzas una rutina, incorpora un producto nuevo a la vez.',
-    'No copies exactamente la rutina de otra persona: tu piel puede necesitar algo distinto.',
-    'La constancia con productos suaves puede dar mejores resultados que una rutina agresiva.',
-    'Antes de un proceso capilar, siempre cuenta si tienes tintes, decoloración o alisados previos.',
-    'No exprimas granitos inflamados; puedes aumentar la irritación y dejar marcas.',
-    'Un tratamiento profesional funciona mejor cuando también cuidas tu piel en casa.',
-    'Si tu piel está muy sensible, no tienes que usar todos los activos de moda.'
-  ];
-
+// Nota diaria de Antho
+(function initDailyNote(){
+  const notes=["Hoy quería recordarte que una rutina sencilla y constante puede ayudarte más que usar muchos productos sin saber si realmente los necesitas.", "Si tu piel se siente tirante después de limpiarla, prueba una limpieza más suave y no olvides sellar la hidratación con una crema.", "No necesitas tener una rutina perfecta. Lo importante es encontrar una que puedas mantener y que se sienta bien para ti.", "Si vas a incorporar un activo nuevo, úsalo poco a poco. Tu piel también necesita tiempo para adaptarse.", "Recuerda aplicar protector solar también en cuello y escote. Son zonas que muchas veces olvidamos cuidar.", "Si hoy no alcanzaste a completar toda tu rutina, no pasa nada. Volver mañana también es parte de la constancia.", "Antes de comprar un producto porque está de moda, pregúntate qué necesita realmente tu piel.", "Una piel grasa también puede estar deshidratada. La hidratación no es exclusiva de las pieles secas.", "Si notas ardor intenso, picazón o irritación persistente, detén el producto. El dolor no significa que esté funcionando mejor.", "Los cambios de la piel toman tiempo. Sé paciente y evita cambiar toda tu rutina cada pocos días.", "Si usas plancha, secador u ondulador, el protector térmico es un paso pequeño que puede marcar una gran diferencia.", "Tu cabello no necesita el mismo tratamiento todos los días. Obsérvalo y adapta tus cuidados según cómo se sienta.", "Después de un proceso químico, dale prioridad a la suavidad, la hidratación y el uso moderado de herramientas de calor.", "Si tus puntas están muy abiertas, ningún producto puede cerrarlas por completo. Un corte suave puede mejorar mucho el acabado.", "No apliques aceites capilares en exceso. Una pequeña cantidad en medios y puntas suele ser suficiente.", "Si tienes el cuero cabelludo irritado o con heridas, evita realizar procesos químicos hasta que esté recuperado.", "Un tratamiento capilar se ve mejor cuando también mantienes cuidados simples en casa.", "Si tu cabello está decolorado, cuenta siempre tus procesos anteriores antes de realizarte un alisado o tratamiento intenso.", "Hoy regálate aunque sean cinco minutos para cuidarte. El autocuidado no tiene que ser largo para ser importante.", "Tu piel y tu cabello no determinan tu valor. Cuidarlos debe ser una forma de acompañarte, no de exigirte.", "Descansar, beber agua y alimentarte bien también forman parte del cuidado personal.", "No te compares con resultados editados en redes sociales. Tu proceso tiene su propio ritmo.", "Ser constante no significa hacerlo todo perfecto; significa volver cada vez que puedas.", "Gracias por visitar Glow by Antho. Espero que este espacio te ayude a disfrutar más el cuidado de tu piel y cabello.", "Si hoy tuviste un día difícil, limpiar tu rostro y aplicar hidratante también puede ser una pequeña forma de decirte: me cuido.", "Una buena rutina no tiene que ser costosa. La limpieza suave, la hidratación y el protector solar son una base muy valiosa.", "Evita exfoliar tu piel todos los días. Darle descanso también ayuda a mantener una barrera más cómoda.", "No olvides lavar tus brochas y esponjas de maquillaje con frecuencia para evitar acumulación de residuos.", "Aplicar más cantidad de un producto no siempre mejora sus resultados. Sigue una cantidad razonable y observa cómo responde tu piel.", "Si un producto le funciona a otra persona, no significa que sea el ideal para ti. Cada piel tiene necesidades distintas.", "El agua muy caliente puede aumentar la sensación de tirantez en la piel y resecar el cabello. Prefiere temperaturas más suaves.", "Desenreda el cabello con paciencia, comenzando por las puntas y avanzando hacia arriba para reducir quiebres.", "Si vas a dormir con el cabello húmedo, recuerda que puede aumentar el frizz y la fragilidad. Intenta secarlo suavemente antes.", "El brillo bonito del cabello también se construye evitando el exceso de calor y cuidando las puntas.", "No necesitas lavar tu rostro muchas veces al día. Una limpieza excesiva puede alterar la comodidad de tu piel.", "Cuando pruebes un producto nuevo, evita estrenar varios a la vez. Así sabrás cuál te ayudó o cuál te causó irritación.", "Tu cuello, manos y labios también merecen hidratación y protección diaria.", "Si tu piel está sensible, simplificar tu rutina durante unos días puede ser una muy buena decisión.", "Una mascarilla puede complementar tu rutina, pero no reemplaza la limpieza, la hidratación ni el protector solar.", "Escucha las señales de tu piel. La tirantez, el ardor y la descamación son razones para bajar la intensidad de los activos.", "Si te realizaste una limpieza facial, sigue las indicaciones posteriores y evita manipular demasiado la piel.", "Para mantener un alisado o botox capilar, utiliza productos suaves y evita abusar de temperaturas muy altas.", "Tu rutina debe adaptarse a ti, no tú a ella. Hazla sencilla, agradable y posible.", "Hoy recuerda que cada pequeño hábito suma, aunque los resultados todavía no sean visibles.", "Gracias por confiar en Glow by Antho. Todo este espacio fue creado con mucho cariño para acompañarte.", "Si tienes una duda, pregunta con confianza. Aprender a cuidar tu piel y cabello también forma parte del proceso.", "No persigas una piel sin textura. La piel real tiene poros, líneas y cambios, y aun así puede estar sana y cuidada.", "El protector solar es un hábito de todos los días, incluso cuando el cielo está nublado.", "Si tu cabello se siente pesado, quizá necesita menos producto y una limpieza adecuada, no necesariamente más tratamientos.", "Regálate paciencia. Cuidarte también significa tratarte con amabilidad durante el proceso."];
+  const farewells=["Mañana encontrarás una nueva nota esperándote. Espero volver a verte por aquí. 🤍", "Gracias por regalarme un momento de tu día. Te espero mañana con una nueva nota. 💗", "Cada día preparo una nota distinta con mucho cariño para ti. Nos vemos mañana. 🤍", "Espero que esta pequeña nota te haya acompañado hoy. Mañana habrá otra esperándote. ✨", "Gracias por formar parte de Glow by Antho. Siempre habrá una nueva nota para ti. 🤍", "Tu constancia también se construye con pequeños pasos. Te espero mañana con otra nota. 🌸", "Vuelve mañana: tendré un nuevo mensajito preparado con cariño para ti. 💗", "Gracias por pasar por este rincón de Glow by Antho. Nos encontramos nuevamente mañana. 🤍"];
   const day=Math.floor(Date.now()/86400000);
-  const set=(id,text)=>{const e=document.querySelector(id);if(e)e.textContent=text};
-  const tip=tips[day%tips.length];
-  const ingredient=ingredients[day%ingredients.length];
-  const myth=myths[day%myths.length];
-
-  set('#dailyTipTitle',tip[0]);
-  set('#dailyTipText',tip[1]);
-  set('#dailyIngredientTitle',ingredient[0]);
-  set('#dailyIngredientText',ingredient[1]);
-  set('#dailyMythTitle',myth[0]);
-  set('#dailyMythText',myth[1]);
-  set('#anthoAdvice','“'+antho[day%antho.length]+'”');
-
-  const challengeChecks=[...document.querySelectorAll('.challenge-check')];
-  if(challengeChecks.length){
-    const today=new Date().toISOString().slice(0,10);
-    let saved={date:today,items:{}};
-    try{
-      const parsed=JSON.parse(localStorage.getItem('glowChallenge')||'{}');
-      if(parsed.date===today)saved=parsed;
-    }catch(e){}
-
-    const render=()=>{
-      challengeChecks.forEach(c=>{
-        c.checked=Boolean(saved.items[c.dataset.challenge]);
-        c.closest('label')?.classList.toggle('completed',c.checked);
-      });
-      const done=challengeChecks.filter(c=>c.checked).length;
-      const result=document.querySelector('#challengeResult');
-      if(result){
-        result.classList.toggle('complete',done===challengeChecks.length);
-        result.textContent=done===challengeChecks.length
-          ?'¡Glow completado! Hoy cuidaste de ti de varias formas ✨'
-          :`Llevas ${done} de ${challengeChecks.length} hábitos completados.`;
-      }
-      localStorage.setItem('glowChallenge',JSON.stringify(saved));
-    };
-
-    challengeChecks.forEach(c=>c.addEventListener('change',()=>{
-      saved.items[c.dataset.challenge]=c.checked;
-      render();
-    }));
-    render();
-  }
+  if($('#anthoDailyNote'))$('#anthoDailyNote').textContent=notes[day%notes.length];
+  if($('#anthoReturnMessage'))$('#anthoReturnMessage').textContent=farewells[day%farewells.length];
+  const card=$('#anthoNoteCard');
+  if(card)card.className='antho-note reveal note-theme-'+(day%6);
 })();

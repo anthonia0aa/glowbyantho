@@ -2,7 +2,7 @@ const $=(s,p=document)=>p.querySelector(s),$$=(s,p=document)=>[...p.querySelecto
 const cfg=window.GLOW_CONFIG,db=window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_PUBLISHABLE_KEY);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 const wa=(p,m)=>`https://wa.me/${String(p||'').replace(/\D/g,'')}?text=${encodeURIComponent(m)}`;
-let cache={tests:[],bookings:[],questions:[],orders:[]};
+let cache={tests:[],bookings:[],questions:[],orders:[],comments:[]};
 
 $('#loginBtn').onclick=async()=>{
   $('#loginError').textContent='';
@@ -25,13 +25,14 @@ async function show(){
   await load();
 }
 async function load(){
-  const [tr,br,qr,or]=await Promise.all([
+  const [tr,br,qr,or,cr]=await Promise.all([
     db.from('test_results').select('*').order('created_at',{ascending:false}),
     db.from('bookings').select('*').order('created_at',{ascending:false}),
     db.from('questions').select('*').order('created_at',{ascending:false}),
-    db.from('orders').select('*').order('created_at',{ascending:false})
+    db.from('orders').select('*').order('created_at',{ascending:false}),
+    db.from('question_comments').select('*,questions(question)').order('created_at',{ascending:false})
   ]);
-  cache={tests:tr.data||[],bookings:br.data||[],questions:qr.data||[],orders:or.data||[]};
+  cache={tests:tr.data||[],bookings:br.data||[],questions:qr.data||[],orders:or.data||[],comments:cr.data||[]};
   render($('#adminSearch').value.trim().toLowerCase());
 }
 function match(record,term){
@@ -43,6 +44,7 @@ function render(term=''){
   const b=cache.bookings.filter(x=>match(x,term));
   const q=cache.questions.filter(x=>match(x,term));
   const o=cache.orders.filter(x=>match(x,term));
+  const c=cache.comments.filter(x=>match(x,term));
 
   $('#sTests').textContent=cache.tests.filter(x=>!x.reviewed).length;
   $('#sBookings').textContent=cache.bookings.filter(x=>!['realizada','cancelada'].includes(x.status)).length;
@@ -59,10 +61,14 @@ function render(term=''){
 
   $('#questions').innerHTML='<h2>Preguntas</h2>'+(q.length?q.map(x=>`<div class="record"><div class="head"><div><b>${esc(x.client_name)} · ${esc(x.category)}</b><p>${esc(x.phone||'Sin WhatsApp registrado')}</p></div><span class="status">${esc(x.status)}</span></div><p>${esc(x.question)}</p><textarea id="a-${x.id}" placeholder="Escribe tu respuesta">${esc(x.answer||'')}</textarea><div class="actions"><button onclick="saveAnswer('${x.id}')">Guardar respuesta</button>${x.phone?`<a target="_blank" href="${wa(x.phone,`Hola ${x.client_name} 💗 Soy Anthonia de Glow by Antho. Respecto a tu pregunta: ${x.question}`)}">Responder por WhatsApp</a>`:''}</div></div>`).join(''):'<p>No se encontraron preguntas.</p>');
 
-  $('#orders').innerHTML='<h2>Pedidos</h2>'+(o.length?o.map(x=>`<div class="record"><div class="head"><div><b>Pedido #${x.order_number||'—'} · ${esc(x.client_name)}</b><p>${esc(x.phone)} · ${esc(x.commune)} · ${esc(x.starken_destination)}</p></div><span class="status">${esc(x.payment_status)} / ${esc(x.shipping_status)}</span></div><pre>${esc(JSON.stringify(x.items,null,2))}</pre><p><b>Total productos:</b> $${Number(x.products_total||0).toLocaleString('es-CL')}</p><div class="actions"><a target="_blank" href="${wa(x.phone,`Hola ${x.client_name} 💗 Recibí tu pedido de Glow by Antho por $${Number(x.products_total||0).toLocaleString('es-CL')}.`)}">WhatsApp</a><button onclick="orderStatus('${x.id}','pago_confirmado','preparando')">Pago recibido</button><button onclick="orderStatus('${x.id}','pago_confirmado','enviado')">Enviado</button><button onclick="orderStatus('${x.id}','pago_confirmado','entregado')">Entregado</button></div></div>`).join(''):'<p>No se encontraron pedidos.</p>');
+  $('#orders').innerHTML='<h2>Pedidos</h2>'+(o.length?o.map(x=>`<div class="record"><div class="head"><div><b>Pedido #${x.order_number||'—'} · ${esc(x.client_name)}</b><p>${esc(x.phone)} · ${esc(x.commune)} · ${esc(x.starken_destination)}</p></div><span class="status">${esc(x.payment_status)} / ${esc(x.shipping_status)}</span></div><pre>${esc(JSON.stringify(x.items,null,2))}</pre><p><b>Total productos:</b> $${Number(x.products_total||0).toLocaleString('es-CL')}</p><div class="actions"><a target="_blank" href="${wa(x.phone,`Hola ${x.client_name} 💗 Recibí tu pedido de Glow by Antho por $${Number(x.products_total||0).toLocaleString('es-CL')}.`)}">WhatsApp</a><button onclick="orderStatus('${x.id}','pago_confirmado','preparando')">Pago recibido</button><button onclick="orderStatus('${x.id}','pago_confirmado','enviado')">Enviado</button><button onclick="orderStatus('${x.id}','pago_confirmado','entregado')">Entregado</button></div></div>`).join('') :'<p>No se encontraron pedidos.</p>');
+
+  $('#comments').innerHTML='<h2>Comentarios de preguntas</h2>'+(c.length?c.map(x=>`<div class="record"><div class="head"><div><b>${esc(x.name)}</b><p>Pregunta: ${esc(x.questions?.question||'')}</p></div><span class="status">${x.approved?'Aprobado':'Pendiente'}</span></div><p>${esc(x.comment)}</p><div class="actions">${x.approved?'':`<button onclick="approveComment('${x.id}')">Aprobar</button>`}<button onclick="deleteComment('${x.id}')">Eliminar</button></div></div>`).join(''):'<p>No se encontraron comentarios.</p>');
 }
 window.review=async id=>{await db.from('test_results').update({reviewed:true}).eq('id',id);load()};
 window.bookingStatus=async(id,status)=>{await db.from('bookings').update({status}).eq('id',id);load()};
-window.saveAnswer=async id=>{await db.from('questions').update({answer:$('#a-'+id).value,status:'respondida',answered_at:new Date().toISOString()}).eq('id',id);load()};
+window.saveAnswer=async id=>{await db.from('questions').update({answer:$('#a-'+id).value,status:'respondida',is_public:true,answered_at:new Date().toISOString()}).eq('id',id);load()};
 window.orderStatus=async(id,payment_status,shipping_status)=>{await db.from('orders').update({payment_status,shipping_status}).eq('id',id);load()};
 (async()=>{const {data}=await db.auth.getSession();if(data.session)show()})();
+window.approveComment=async id=>{await db.from('question_comments').update({approved:true}).eq('id',id);load()};
+window.deleteComment=async id=>{await db.from('question_comments').delete().eq('id',id);load()};

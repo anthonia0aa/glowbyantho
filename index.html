@@ -116,48 +116,49 @@
     </section>
 
     
-    <section id="rutina" class="section routine-zone">
+    <section id="rutina" class="section routine-zone routine-clean">
       <div class="shell">
         <div class="section-head reveal">
           <span>03</span>
           <div>
             <p class="eyebrow">MI RUTINA</p>
             <h2>Tu espacio diario de autocuidado</h2>
-            <p>Marca tus pasos, guarda tus fechas y revisa contenido nuevo cada día. Todo queda guardado en este mismo dispositivo.</p>
+            <p>Marca tus pasos, guarda tus fechas y vuelve cada día para encontrar una nueva nota de Antho.</p>
           </div>
         </div>
 
-        <div class="routine-layout reveal">
-          <div class="progress-garden-card">
-            <div class="progress-garden">
-              <div class="garden-sky">
-                <span class="garden-sun">☀️</span>
-                <span class="garden-cloud cloud-one"></span>
-                <span class="garden-cloud cloud-two"></span>
+        <div class="routine-layout-clean reveal">
+          <aside class="progress-card-clean">
+            <div class="plant-scene">
+              <div class="plant-glow"></div>
+              <div class="plant-pot">
+                <div class="pot-rim"></div>
+                <div class="pot-body"></div>
               </div>
-              <div id="gardenPlant" class="garden-plant level-0">
-                <div class="stem"></div>
-                <div class="leaf leaf-a"></div>
-                <div class="leaf leaf-b"></div>
-                <div class="flower flower-a">🌸</div>
-                <div class="flower flower-b">🌷</div>
-                <div class="flower flower-c">🌼</div>
+              <div id="routinePlant" class="routine-plant stage-0" aria-label="Progreso de tu rutina">
+                <span class="plant-stem"></span>
+                <span class="plant-leaf leaf-left-one"></span>
+                <span class="plant-leaf leaf-right-one"></span>
+                <span class="plant-leaf leaf-left-two"></span>
+                <span class="plant-leaf leaf-right-two"></span>
+                <span class="plant-flower main-flower">🌸</span>
+                <span class="plant-flower side-flower-one">🌷</span>
+                <span class="plant-flower side-flower-two">🌼</span>
               </div>
-              <div class="garden-soil"></div>
             </div>
-            <div class="garden-status">
-              <span class="eyebrow">TU PROGRESO</span>
-              <h3 id="gardenStage">Semillita Glow</h3>
-              <p>Tu jardín crece mientras completas tu rutina.</p>
-              <div class="progress-facts">
+            <div class="progress-copy">
+              <p class="eyebrow">TU PROGRESO</p>
+              <h3 id="plantStageName">Semillita Glow</h3>
+              <p id="plantStageText">Completa tus pasos para verla crecer.</p>
+              <div class="progress-stats">
                 <div><strong id="glowScore">0%</strong><small>Nivel Glow</small></div>
                 <div><strong id="streakNumber">0</strong><small>Días de constancia</small></div>
               </div>
             </div>
-          </div>
+          </aside>
 
-          <div class="routine-panel">
-            <div class="routine-intro">
+          <div class="routine-main-clean">
+            <div class="routine-today">
               <div>
                 <p class="eyebrow">HOY</p>
                 <h3>Tu cuidado diario</h3>
@@ -171,7 +172,7 @@
               <article class="daily-card morning-card">
                 <div class="daily-title"><span>☀️</span><div><b>Rutina de mañana</b><small>Protección y luminosidad</small></div></div>
                 <label><input type="checkbox" class="routine-check" data-step="am-cleanser"> Limpiador suave</label>
-                <label><input type="checkbox" class="routine-check" data-step="am-serum"> Sérum hidratante o antioxidante</label>
+                <label><input type="checkbox" class="routine-check" data-step="am-serum"> Sérum según tu necesidad</label>
                 <label><input type="checkbox" class="routine-check" data-step="am-cream"> Crema hidratante</label>
                 <label><input type="checkbox" class="routine-check" data-step="am-spf"> Protector solar</label>
               </article>
@@ -187,82 +188,82 @@
           </div>
         </div>
 
-        <div class="return-tools reveal">
-          <article class="return-card">
+        <div class="return-tools-clean reveal">
+          <article class="return-card-clean">
             <span>☀️</span>
-            <div>
-              <b>Protección diaria</b>
-              <small>¿Ya aplicaste protector solar hoy?</small>
-            </div>
+            <div><b>Protección diaria</b><small>¿Ya aplicaste protector solar hoy?</small></div>
             <button class="mini" id="spfReminder">Sí, ya lo hice</button>
           </article>
-
-          <article class="return-card">
+          <article class="return-card-clean">
             <span>🫧</span>
-            <div>
-              <b>Día de mascarilla</b>
-              <small id="maskDayText">Elige tu día semanal de hidratación.</small>
-            </div>
+            <div><b>Día de mascarilla</b><small id="maskDayText">Elige tu día semanal de hidratación.</small></div>
             <select id="maskDay">
               <option value="">Elegir día</option>
               <option>Lunes</option><option>Martes</option><option>Miércoles</option>
               <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
             </select>
           </article>
-
-          <article class="return-card">
+          <article class="return-card-clean">
             <span>📅</span>
-            <div>
-              <b>Guarda tu próxima fecha</b>
-              <small id="nextCleaningText">Cuando vuelvas desde este dispositivo, tu fecha seguirá aquí.</small>
-            </div>
+            <div><b>Guarda tu próxima fecha</b><small id="nextCleaningText">Cuando vuelvas desde este dispositivo, tu fecha seguirá aquí.</small></div>
             <input id="nextCleaning" type="date">
           </article>
         </div>
 
-        <div class="daily-glow-grid reveal">
-          <article class="daily-glow-card featured-daily">
-            <span class="daily-label">GLOW DEL DÍA</span>
-            <div class="daily-icon">💧</div>
-            <h3 id="dailyTipTitle">Consejo de hoy</h3>
-            <p id="dailyTipText"></p>
-          </article>
-
-          <article class="daily-glow-card">
-            <span class="daily-label">INGREDIENTE DEL DÍA</span>
-            <div class="daily-icon">🌿</div>
-            <h3 id="dailyIngredientTitle"></h3>
-            <p id="dailyIngredientText"></p>
-          </article>
-
-          <article class="daily-glow-card">
-            <span class="daily-label">MITO O REALIDAD</span>
-            <div class="daily-icon">✨</div>
-            <h3 id="dailyMythTitle"></h3>
-            <p id="dailyMythText"></p>
-          </article>
-
-          <article class="daily-glow-card antho-card">
-            <span class="daily-label">CONSEJO DE ANTHO</span>
-            <div class="antho-avatar">A</div>
-            <blockquote id="anthoAdvice"></blockquote>
-          </article>
-        </div>
-
-        <div class="glow-challenge reveal">
-          <div>
-            <p class="eyebrow">DESAFÍO GLOW</p>
-            <h3>Pequeños hábitos para sentirte mejor</h3>
+        <article id="anthoNoteCard" class="antho-note reveal note-theme-0">
+          <div class="note-decoration note-decoration-one"></div>
+          <div class="note-decoration note-decoration-two"></div>
+          <div class="note-heading">
+            <span class="note-seal">A</span>
+            <div><p class="eyebrow">UNA NOTA DE ANTHO</p><h3>Un mensajito para ti</h3></div>
           </div>
-          <div class="challenge-checks">
-            <label><input type="checkbox" class="challenge-check" data-challenge="water"> Tomé agua</label>
-            <label><input type="checkbox" class="challenge-check" data-challenge="spf"> Usé protector solar</label>
-            <label><input type="checkbox" class="challenge-check" data-challenge="clean"> Limpié mi rostro</label>
-            <label><input type="checkbox" class="challenge-check" data-challenge="hydrate"> Hidraté mi piel</label>
-            <label><input type="checkbox" class="challenge-check" data-challenge="sleep"> Dormí o descansaré bien</label>
+          <div class="note-body">
+            <p class="note-hello">Hola 🤍</p>
+            <p id="anthoDailyNote"></p>
+            <p class="note-signature">Con cariño,<br><strong>Antho ✨</strong></p>
           </div>
-          <div id="challengeResult" class="challenge-result">Completa los hábitos para desbloquear tu Glow del día.</div>
-        </div>
+          <div class="note-return">
+            <span id="anthoReturnMessage">Mañana encontrarás una nueva nota esperándote. Espero volver a verte por aquí. 🤍</span>
+          </div>
+        </article>
+
+        <section id="preguntas" class="questions-inline reveal">
+          <button id="toggleQuestions" class="questions-entry" type="button">
+            <span class="questions-entry-icon">💬</span>
+            <span><b>¿Tienes alguna duda?</b><small>Pregunta con confianza o revisa respuestas que podrían ayudarte.</small></span>
+            <span class="questions-entry-arrow">Ver preguntas ↓</span>
+          </button>
+
+          <div id="questionsDrawer" class="questions-drawer hidden">
+            <div class="questions-drawer-head">
+              <div><p class="eyebrow">PREGUNTAS Y RESPUESTAS</p><h3>Pregúntale a Antho</h3><p>Las preguntas respondidas quedan visibles para que también puedan ayudar a otras personas.</p></div>
+              <button id="closeQuestions" class="mini" type="button">Cerrar</button>
+            </div>
+
+            <form id="questionForm" class="question-form question-form-inline">
+              <input required name="name" placeholder="Tu nombre">
+              <input name="phone" placeholder="WhatsApp, opcional">
+              <select required name="category">
+                <option value="">Tema</option>
+                <option value="facial">Facial</option>
+                <option value="capilar">Capilar</option>
+                <option value="reservas">Reservas</option>
+                <option value="productos">Productos</option>
+                <option value="otro">Otro</option>
+              </select>
+              <textarea required name="question" placeholder="Escribe tu pregunta"></textarea>
+              <button class="btn primary">Enviar pregunta</button>
+            </form>
+
+            <div class="published-questions-head">
+              <h3>Preguntas respondidas</h3>
+              <p>Presiona una pregunta para leer la respuesta y los comentarios aprobados.</p>
+            </div>
+            <div id="publicQuestionsList" class="public-questions-list">
+              <p class="questions-loading">Cargando preguntas…</p>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -355,23 +356,7 @@
         </form>
       </div>
     </section>
-
-    <section id="preguntas" class="section shell">
-      <div class="section-head reveal"><span>06</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
-      <form id="questionForm" class="question-form">
-        <input required name="name" placeholder="Tu nombre">
-        <input name="phone" placeholder="WhatsApp, opcional">
-        <select required name="category"><option value="">Tema</option><option value="facial">Facial</option><option value="capilar">Capilar</option><option value="reservas">Reservas</option><option value="productos">Productos</option><option value="otro">Otro</option></select>
-        <textarea required name="question" placeholder="Escribe tu pregunta"></textarea>
-        <button class="btn primary">Enviar pregunta</button>
-      </form>
-      <div class="faq">
-        <details><summary>¿Puedo ir maquillada a una limpieza facial?</summary><p>Lo ideal es asistir sin maquillaje, pero si no puedes, se retirará durante la higiene inicial.</p></details>
-        <details><summary>¿El precio capilar cambia por largo?</summary><p>Sí. El valor final depende del largo, cantidad, estado y procesos químicos previos.</p></details>
-        <details><summary>¿El test entrega un diagnóstico?</summary><p>No. Es una orientación inicial y no reemplaza una evaluación profesional o médica.</p></details>
-      </div>
-    </section>
-  </main>
+</main>
 
   <button id="cartBtn" class="cart-float">🛍 <span id="cartCount">0</span></button>
   <a class="whatsapp-float" href="https://wa.me/56971624406?text=Hola%2C%20vengo%20desde%20la%20p%C3%A1gina%20de%20Glow%20by%20Antho%20y%20quisiera%20consultar%20por%20un%20servicio%20%F0%9F%92%97" target="_blank">✆</a>

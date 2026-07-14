@@ -1,35 +1,33 @@
-# Glow by Antho Studio — Versión oficial 1.0
+# Glow by Antho Studio — V1.1 Oficial
 
-Incluye:
-- Inicio premium.
-- Servicios faciales y capilares.
-- Glow Match facial y capilar conectado a Supabase.
-- Mi Rutina con checklist AM/PM.
-- Jardín visual como representación del progreso.
-- Nivel Glow y días de constancia.
-- Protección diaria.
-- Día de mascarilla.
-- Guarda tu próxima fecha.
-- Glow del día.
-- Ingrediente del día.
-- Mito o realidad.
-- Consejo de Antho.
-- Desafío Glow.
-- Glow Guide.
-- Tienda Abib.
-- Reservas.
-- Preguntas.
-- Panel privado.
+## Cambios
+- Mi Rutina más limpia y ordenada.
+- Planta rediseñada con cinco etapas reales de crecimiento.
+- Una sola “Nota de Antho” que cambia automáticamente cada día.
+- 50 notas iniciales sobre piel, cabello, autocuidado y constancia.
+- Despedida distinta e invitación a volver mañana.
+- Eliminadas las tarjetas duplicadas de tips, mitos e ingredientes.
+- Preguntas ubicadas de forma pequeña y sutil debajo de Mi Rutina.
+- Las preguntas respondidas por Antho pueden publicarse para que otras personas las lean.
+- Comentarios enviados por visitantes y aprobados desde el panel privado.
+- La antigua sección de Preguntas al final fue eliminada.
 
-Se eliminó:
-- Resultados / sesiones sin fotografías.
-- Combinador de ingredientes.
+## Paso adicional obligatorio en Supabase
+Antes de probar las preguntas públicas y comentarios:
 
-Publicación:
-1. Extraer el ZIP.
-2. Copiar todo.
+1. Entra a Supabase.
+2. Abre SQL Editor.
+3. Crea una New query.
+4. Abre `supabase_actualizacion_v1_1.sql`.
+5. Copia todo, pégalo y presiona Run.
+
+Esto crea la tabla de comentarios y los permisos públicos seguros.
+
+## Publicar la web
+1. Extrae el ZIP.
+2. Copia todos los archivos.
 3. GitHub Desktop → Repository → Show in Explorer.
-4. Pegar y reemplazar.
-5. Commit: `Publicar Glow by Antho V1.0 oficial`.
+4. Pega y reemplaza.
+5. Commit: `Publicar Glow by Antho V1.1`.
 6. Push origin.
-7. Recargar con Ctrl + F5.
+7. Espera Vercel y recarga con Ctrl + F5.
