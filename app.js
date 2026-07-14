@@ -142,40 +142,6 @@ if(glowHero){
   update();
 })();
 
-// Combinador rápido de ingredientes
-(function initIngredientTool(){
-  const button=document.querySelector('#checkIngredients');
-  if(!button)return;
-  const safeHydrators=['Ácido hialurónico','Ceramidas','Niacinamida'];
-  const separatePairs=[
-    ['Retinol','Ácido glicólico'],['Retinol','Ácido salicílico'],
-    ['Ácido glicólico','Ácido salicílico'],['Retinol','Vitamina C']
-  ];
-  button.addEventListener('click',()=>{
-    const one=document.querySelector('#ingredientOne').value;
-    const two=document.querySelector('#ingredientTwo').value;
-    const box=document.querySelector('#ingredientResult');
-    box.className='ingredient-result';
-    if(!one||!two){box.textContent='Selecciona dos ingredientes para revisar la combinación.';return}
-    if(one===two){box.classList.add('caution');box.innerHTML='<b>No necesitas duplicarlo.</b> Usar dos productos con el mismo activo puede aumentar irritación sin aportar un beneficio extra.';return}
-    const pair=[one,two];
-    const mustSeparate=separatePairs.some(p=>p.every(x=>pair.includes(x)));
-    if(mustSeparate){
-      box.classList.add('caution');
-      box.innerHTML='<b>Mejor separarlos.</b> Úsalos en noches distintas o uno por la mañana y otro por la noche, especialmente si tu piel es sensible o principiante.';
-      return;
-    }
-    if(pair.some(x=>safeHydrators.includes(x))){
-      box.classList.add('good');
-      box.innerHTML='<b>Combinación generalmente compatible.</b> Introduce los productos poco a poco y ajusta la frecuencia según tolerancia.';
-      return;
-    }
-    box.classList.add('good');
-    box.innerHTML='<b>Pueden convivir en una rutina bien organizada.</b> Comienza con baja frecuencia y detén el uso si notas ardor, descamación o irritación persistente.';
-  });
-})();
-
-
 // FINAL 3.0 — Glow Score + herramientas para volver a la página
 (function enhanceGlowRoutine(){
   const checks=[...document.querySelectorAll('.routine-check')];
@@ -223,6 +189,113 @@ if(glowHero){
       cleaningText.textContent='Tu próxima limpieza está registrada para el '+new Intl.DateTimeFormat('es-CL',{day:'numeric',month:'long',year:'numeric'}).format(date)+'.';
     };
     cleaning.addEventListener('change',()=>{localStorage.setItem('glowNextCleaning',cleaning.value);render()});
+    render();
+  }
+})();
+
+// VERSIÓN OFICIAL 1.0 — progreso, jardín y contenido diario
+(function initOfficialRoutine(){
+  const checks=[...document.querySelectorAll('.routine-check')];
+  const plant=document.querySelector('#gardenPlant');
+  const stage=document.querySelector('#gardenStage');
+  const score=document.querySelector('#glowScore');
+  const stages=['Semillita Glow','Primer brote','Rutina en crecimiento','Hojitas de constancia','Primera flor','Jardín Glow completo'];
+
+  const syncGarden=()=>{
+    if(!checks.length||!plant)return;
+    const done=checks.filter(c=>c.checked).length;
+    const pct=Math.round(done/checks.length*100);
+    const level=Math.min(5,Math.floor((done/checks.length)*6));
+    plant.className='garden-plant level-'+level;
+    if(stage)stage.textContent=stages[level];
+    if(score)score.textContent=pct+'%';
+  };
+  checks.forEach(c=>c.addEventListener('change',syncGarden));
+  setTimeout(syncGarden,100);
+
+  const tips=[
+    ['Piel tirante no siempre significa piel seca','Si tu piel se siente tirante después de lavarla, también puede estar deshidratada. Usa limpieza suave e hidratación.'],
+    ['Menos puede ser más','Una rutina corta y constante suele funcionar mejor que usar demasiados productos a la vez.'],
+    ['Tu cuello también cuenta','Extiende la hidratación y el protector solar hacia cuello y escote.'],
+    ['La barrera primero','Si todo te arde o irrita, pausa activos fuertes y prioriza productos calmantes e hidratantes.'],
+    ['Dale tiempo a tu rutina','Los cambios reales necesitan constancia. Evita cambiar todos tus productos cada semana.'],
+    ['Protector incluso en días nublados','La radiación UV sigue presente aunque el día se vea gris.'],
+    ['No exfolies de más','Más exfoliación no significa mejores resultados. La irritación puede empeorar textura y brillo.']
+  ];
+
+  const ingredients=[
+    ['Centella asiática','Ayuda a calmar la piel y es una buena aliada cuando la barrera se siente sensible.'],
+    ['Niacinamida','Apoya la barrera y ayuda a equilibrar visualmente la piel.'],
+    ['Ácido hialurónico','Aporta hidratación y funciona mejor si luego sellas con una crema.'],
+    ['Ceramidas','Ayudan a reforzar la barrera y reducir la sensación de tirantez.'],
+    ['Vitamina C','Aporta luminosidad y protección antioxidante durante el día.'],
+    ['Ácido salicílico','Puede ayudar con poros congestionados y puntos negros si se usa con moderación.'],
+    ['Péptidos','Se usan para apoyar una apariencia más suave y cuidada.']
+  ];
+
+  const myths=[
+    ['“La piel grasa no necesita hidratante”','Mito. Una piel grasa también puede estar deshidratada y necesitar una crema ligera.'],
+    ['“Mientras más espuma, mejor limpia”','Mito. Mucha espuma no garantiza una mejor limpieza y puede resecar algunas pieles.'],
+    ['“El protector solar es solo para el verano”','Mito. Se recomienda usarlo todos los días.'],
+    ['“Los poros se abren y se cierran”','Mito. Pueden verse más o menos notorios, pero no funcionan como puertas.'],
+    ['“Ardor significa que el producto está funcionando”','Mito. El ardor intenso puede indicar irritación.'],
+    ['“Dormir con maquillaje una vez no importa”','Mito. Puede favorecer irritación y obstrucción.'],
+    ['“El cabello se acostumbra al shampoo”','No exactamente. Sus necesidades pueden cambiar por clima, procesos y acumulación.']
+  ];
+
+  const antho=[
+    'Si recién comienzas una rutina, incorpora un producto nuevo a la vez.',
+    'No copies exactamente la rutina de otra persona: tu piel puede necesitar algo distinto.',
+    'La constancia con productos suaves puede dar mejores resultados que una rutina agresiva.',
+    'Antes de un proceso capilar, siempre cuenta si tienes tintes, decoloración o alisados previos.',
+    'No exprimas granitos inflamados; puedes aumentar la irritación y dejar marcas.',
+    'Un tratamiento profesional funciona mejor cuando también cuidas tu piel en casa.',
+    'Si tu piel está muy sensible, no tienes que usar todos los activos de moda.'
+  ];
+
+  const day=Math.floor(Date.now()/86400000);
+  const set=(id,text)=>{const e=document.querySelector(id);if(e)e.textContent=text};
+  const tip=tips[day%tips.length];
+  const ingredient=ingredients[day%ingredients.length];
+  const myth=myths[day%myths.length];
+
+  set('#dailyTipTitle',tip[0]);
+  set('#dailyTipText',tip[1]);
+  set('#dailyIngredientTitle',ingredient[0]);
+  set('#dailyIngredientText',ingredient[1]);
+  set('#dailyMythTitle',myth[0]);
+  set('#dailyMythText',myth[1]);
+  set('#anthoAdvice','“'+antho[day%antho.length]+'”');
+
+  const challengeChecks=[...document.querySelectorAll('.challenge-check')];
+  if(challengeChecks.length){
+    const today=new Date().toISOString().slice(0,10);
+    let saved={date:today,items:{}};
+    try{
+      const parsed=JSON.parse(localStorage.getItem('glowChallenge')||'{}');
+      if(parsed.date===today)saved=parsed;
+    }catch(e){}
+
+    const render=()=>{
+      challengeChecks.forEach(c=>{
+        c.checked=Boolean(saved.items[c.dataset.challenge]);
+        c.closest('label')?.classList.toggle('completed',c.checked);
+      });
+      const done=challengeChecks.filter(c=>c.checked).length;
+      const result=document.querySelector('#challengeResult');
+      if(result){
+        result.classList.toggle('complete',done===challengeChecks.length);
+        result.textContent=done===challengeChecks.length
+          ?'¡Glow completado! Hoy cuidaste de ti de varias formas ✨'
+          :`Llevas ${done} de ${challengeChecks.length} hábitos completados.`;
+      }
+      localStorage.setItem('glowChallenge',JSON.stringify(saved));
+    };
+
+    challengeChecks.forEach(c=>c.addEventListener('change',()=>{
+      saved.items[c.dataset.challenge]=c.checked;
+      render();
+    }));
     render();
   }
 })();

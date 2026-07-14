@@ -21,7 +21,7 @@
         <a href="#servicios">Servicios</a>
         <a href="#tests">Tests</a>
         <a href="#rutina">Mi Rutina</a><a href="#guia">Glow Guide</a>
-        <a href="#resultados">Resultados</a>
+        
         <a href="#tienda">Tienda</a>
         <a href="#preguntas">Preguntas</a>
       </div>
@@ -32,14 +32,14 @@
   <main>
     <section id="inicio" class="hero shell">
       <div class="hero-copy reveal">
-        <span class="eyebrow">RUTINAS REALES • RESULTADOS REALES</span>
+        <span class="eyebrow">K‑BEAUTY • AUTOCUIDADO • CONSTANCIA</span>
         <h1>Tu momento de<br><em>brillar bonito.</em></h1>
         <p>Servicios faciales y capilares personalizados, test orientativos, consejos claros y una experiencia femenina, delicada y profesional.</p>
         <div class="actions">
           <a href="#reservar" class="btn primary">Agendar cita</a>
           <a href="#tests" class="btn ghost">Hacer mi test</a>
         </div>
-        <div class="proof"><span>♡ Atención personalizada</span><span>♡ Compra por WhatsApp</span><span>♡ Resultados reales</span></div>
+        <div class="proof"><span>♡ Atención personalizada</span><span>♡ Compra por WhatsApp</span><span>♡ Rutinas y orientación</span></div>
         <div class="hero-microcards">
           <article><b>Glow Match</b><small>Orientación facial y capilar</small></article>
           <article><b>Glow Shop</b><small>Compra rápida por WhatsApp</small></article>
@@ -118,87 +118,150 @@
     
     <section id="rutina" class="section routine-zone">
       <div class="shell">
-        <div class="section-head reveal"><span>03</span><div><p class="eyebrow">MI RUTINA GLOW</p><h2>Vuelve cada día y marca tu cuidado</h2><p>Una guía simple para mantener constancia. Tus marcas quedan guardadas en este dispositivo durante el día.</p></div></div>
+        <div class="section-head reveal">
+          <span>03</span>
+          <div>
+            <p class="eyebrow">MI RUTINA</p>
+            <h2>Tu espacio diario de autocuidado</h2>
+            <p>Marca tus pasos, guarda tus fechas y revisa contenido nuevo cada día. Todo queda guardado en este mismo dispositivo.</p>
+          </div>
+        </div>
 
-        <div class="routine-dashboard reveal">
-          <div class="routine-summary">
-            <div class="streak-orb"><strong id="streakNumber">0</strong><span>días de constancia</span></div>
-            <div class="routine-main-copy">
-              <h3>Tu Glow de hoy</h3>
-              <p id="routineDate"></p>
-              <div class="routine-progress"><span id="routineProgress"></span></div>
-              <small id="routineMessage">Comienza marcando el primer paso.</small>
+        <div class="routine-layout reveal">
+          <div class="progress-garden-card">
+            <div class="progress-garden">
+              <div class="garden-sky">
+                <span class="garden-sun">☀️</span>
+                <span class="garden-cloud cloud-one"></span>
+                <span class="garden-cloud cloud-two"></span>
+              </div>
+              <div id="gardenPlant" class="garden-plant level-0">
+                <div class="stem"></div>
+                <div class="leaf leaf-a"></div>
+                <div class="leaf leaf-b"></div>
+                <div class="flower flower-a">🌸</div>
+                <div class="flower flower-b">🌷</div>
+                <div class="flower flower-c">🌼</div>
+              </div>
+              <div class="garden-soil"></div>
             </div>
-            <div class="glow-score">
-              <span>Glow Score</span>
-              <strong id="glowScore">0%</strong>
-              <small>sube al completar tu rutina</small>
+            <div class="garden-status">
+              <span class="eyebrow">TU PROGRESO</span>
+              <h3 id="gardenStage">Semillita Glow</h3>
+              <p>Tu jardín crece mientras completas tu rutina.</p>
+              <div class="progress-facts">
+                <div><strong id="glowScore">0%</strong><small>Nivel Glow</small></div>
+                <div><strong id="streakNumber">0</strong><small>Días de constancia</small></div>
+              </div>
             </div>
           </div>
 
-          <div class="daily-routines">
-            <article class="daily-card morning-card">
-              <div class="daily-title"><span>☀️</span><div><b>Rutina de mañana</b><small>Protección y luminosidad</small></div></div>
-              <label><input type="checkbox" class="routine-check" data-step="am-cleanser"> Limpiador suave</label>
-              <label><input type="checkbox" class="routine-check" data-step="am-serum"> Sérum hidratante o antioxidante</label>
-              <label><input type="checkbox" class="routine-check" data-step="am-cream"> Crema hidratante</label>
-              <label><input type="checkbox" class="routine-check" data-step="am-spf"> Protector solar</label>
-            </article>
+          <div class="routine-panel">
+            <div class="routine-intro">
+              <div>
+                <p class="eyebrow">HOY</p>
+                <h3>Tu cuidado diario</h3>
+                <p id="routineDate"></p>
+              </div>
+              <div class="routine-progress"><span id="routineProgress"></span></div>
+              <small id="routineMessage">Comienza marcando el primer paso.</small>
+            </div>
 
-            <article class="daily-card night-card">
-              <div class="daily-title"><span>🌙</span><div><b>Rutina de noche</b><small>Limpieza y reparación</small></div></div>
-              <label><input type="checkbox" class="routine-check" data-step="pm-cleanser"> Limpieza del rostro</label>
-              <label><input type="checkbox" class="routine-check" data-step="pm-treatment"> Tratamiento según necesidad</label>
-              <label><input type="checkbox" class="routine-check" data-step="pm-cream"> Hidratante o crema reparadora</label>
-              <label><input type="checkbox" class="routine-check" data-step="pm-hair"> Cuidado capilar o protector de puntas</label>
-            </article>
+            <div class="daily-routines">
+              <article class="daily-card morning-card">
+                <div class="daily-title"><span>☀️</span><div><b>Rutina de mañana</b><small>Protección y luminosidad</small></div></div>
+                <label><input type="checkbox" class="routine-check" data-step="am-cleanser"> Limpiador suave</label>
+                <label><input type="checkbox" class="routine-check" data-step="am-serum"> Sérum hidratante o antioxidante</label>
+                <label><input type="checkbox" class="routine-check" data-step="am-cream"> Crema hidratante</label>
+                <label><input type="checkbox" class="routine-check" data-step="am-spf"> Protector solar</label>
+              </article>
+
+              <article class="daily-card night-card">
+                <div class="daily-title"><span>🌙</span><div><b>Rutina de noche</b><small>Limpieza y reparación</small></div></div>
+                <label><input type="checkbox" class="routine-check" data-step="pm-cleanser"> Limpieza del rostro</label>
+                <label><input type="checkbox" class="routine-check" data-step="pm-treatment"> Tratamiento según necesidad</label>
+                <label><input type="checkbox" class="routine-check" data-step="pm-cream"> Hidratante o crema reparadora</label>
+                <label><input type="checkbox" class="routine-check" data-step="pm-hair"> Cuidado capilar o protector de puntas</label>
+              </article>
+            </div>
           </div>
         </div>
 
         <div class="return-tools reveal">
           <article class="return-card">
-            <span>⏰</span>
-            <div><b>Recordatorio SPF</b><small>Reaplica protector solar cada 2–3 horas si estás expuesta.</small></div>
-            <button class="mini" id="spfReminder">Marcar recordado</button>
+            <span>☀️</span>
+            <div>
+              <b>Protección diaria</b>
+              <small>¿Ya aplicaste protector solar hoy?</small>
+            </div>
+            <button class="mini" id="spfReminder">Sí, ya lo hice</button>
           </article>
+
           <article class="return-card">
             <span>🫧</span>
-            <div><b>Día de mascarilla</b><small id="maskDayText">Elige un día semanal para tu momento de hidratación.</small></div>
+            <div>
+              <b>Día de mascarilla</b>
+              <small id="maskDayText">Elige tu día semanal de hidratación.</small>
+            </div>
             <select id="maskDay">
               <option value="">Elegir día</option>
-              <option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
+              <option>Lunes</option><option>Martes</option><option>Miércoles</option>
+              <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
             </select>
           </article>
+
           <article class="return-card">
             <span>📅</span>
-            <div><b>Próxima limpieza</b><small id="nextCleaningText">Registra tu próxima fecha para volver a verla aquí.</small></div>
+            <div>
+              <b>Guarda tu próxima fecha</b>
+              <small id="nextCleaningText">Cuando vuelvas desde este dispositivo, tu fecha seguirá aquí.</small>
+            </div>
             <input id="nextCleaning" type="date">
           </article>
         </div>
 
-        <div class="ingredient-tool reveal">
+        <div class="daily-glow-grid reveal">
+          <article class="daily-glow-card featured-daily">
+            <span class="daily-label">GLOW DEL DÍA</span>
+            <div class="daily-icon">💧</div>
+            <h3 id="dailyTipTitle">Consejo de hoy</h3>
+            <p id="dailyTipText"></p>
+          </article>
+
+          <article class="daily-glow-card">
+            <span class="daily-label">INGREDIENTE DEL DÍA</span>
+            <div class="daily-icon">🌿</div>
+            <h3 id="dailyIngredientTitle"></h3>
+            <p id="dailyIngredientText"></p>
+          </article>
+
+          <article class="daily-glow-card">
+            <span class="daily-label">MITO O REALIDAD</span>
+            <div class="daily-icon">✨</div>
+            <h3 id="dailyMythTitle"></h3>
+            <p id="dailyMythText"></p>
+          </article>
+
+          <article class="daily-glow-card antho-card">
+            <span class="daily-label">CONSEJO DE ANTHO</span>
+            <div class="antho-avatar">A</div>
+            <blockquote id="anthoAdvice"></blockquote>
+          </article>
+        </div>
+
+        <div class="glow-challenge reveal">
           <div>
-            <p class="eyebrow">COMBINADOR DE ACTIVOS</p>
-            <h3>¿Puedo usar estos ingredientes juntos?</h3>
-            <p>Selecciona dos ingredientes y revisa una orientación rápida.</p>
+            <p class="eyebrow">DESAFÍO GLOW</p>
+            <h3>Pequeños hábitos para sentirte mejor</h3>
           </div>
-          <div class="ingredient-controls">
-            <select id="ingredientOne">
-              <option value="">Primer ingrediente</option>
-              <option>Vitamina C</option><option>Niacinamida</option><option>Ácido hialurónico</option>
-              <option>Retinol</option><option>Ácido salicílico</option><option>Ácido glicólico</option>
-              <option>Ceramidas</option>
-            </select>
-            <span>＋</span>
-            <select id="ingredientTwo">
-              <option value="">Segundo ingrediente</option>
-              <option>Vitamina C</option><option>Niacinamida</option><option>Ácido hialurónico</option>
-              <option>Retinol</option><option>Ácido salicílico</option><option>Ácido glicólico</option>
-              <option>Ceramidas</option>
-            </select>
-            <button id="checkIngredients" class="btn primary">Revisar combinación</button>
+          <div class="challenge-checks">
+            <label><input type="checkbox" class="challenge-check" data-challenge="water"> Tomé agua</label>
+            <label><input type="checkbox" class="challenge-check" data-challenge="spf"> Usé protector solar</label>
+            <label><input type="checkbox" class="challenge-check" data-challenge="clean"> Limpié mi rostro</label>
+            <label><input type="checkbox" class="challenge-check" data-challenge="hydrate"> Hidraté mi piel</label>
+            <label><input type="checkbox" class="challenge-check" data-challenge="sleep"> Dormí o descansaré bien</label>
           </div>
-          <div id="ingredientResult" class="ingredient-result">Elige dos ingredientes para comenzar.</div>
+          <div id="challengeResult" class="challenge-result">Completa los hábitos para desbloquear tu Glow del día.</div>
         </div>
       </div>
     </section>
@@ -239,21 +302,8 @@
         <article><span>HAIR</span><h3>Protector térmico siempre</h3><p>Especialmente antes de plancha, ondulador o secado frecuente.</p></article>
       </div>
     </section>
-
-    <section id="resultados" class="section soft">
-      <div class="shell">
-        <div class="section-head reveal"><span>04</span><div><p class="eyebrow">SKIN JOURNEY</p><h2>Procesos reales, sesión a sesión</h2><p>Espacio para subir fotografías autorizadas y mostrar evolución sin prometer resultados idénticos.</p></div></div>
-        <div class="journey">
-          <article><div class="journey-photo">Sesión 1</div><h4>Evaluación inicial</h4><p>Estado de la piel y objetivo principal.</p></article>
-          <article><div class="journey-photo">Sesión 2</div><h4>Primer seguimiento</h4><p>Textura, hidratación y tolerancia.</p></article>
-          <article><div class="journey-photo">Sesión 3</div><h4>Progreso</h4><p>Ajuste del protocolo según respuesta.</p></article>
-          <article><div class="journey-photo">Sesión 4</div><h4>Comparación</h4><p>Revisión visual del proceso completo.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="tienda" class="section shell">
-      <div class="section-head reveal"><span>06</span><div><p class="eyebrow">GLOW SHOP</p><h2>Mascarillas Abib</h2><p>Arma tu carrito y envíalo listo por WhatsApp. El despacho por Starken se paga al recibir.</p></div></div>
+<section id="tienda" class="section shell">
+      <div class="section-head reveal"><span>05</span><div><p class="eyebrow">GLOW SHOP</p><h2>Mascarillas Abib</h2><p>Arma tu carrito y envíalo listo por WhatsApp. El despacho por Starken se paga al recibir.</p></div></div>
 
       <div class="shop-grid">
         <article class="product-card">
@@ -307,7 +357,7 @@
     </section>
 
     <section id="preguntas" class="section shell">
-      <div class="section-head reveal"><span>07</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
+      <div class="section-head reveal"><span>06</span><div><p class="eyebrow">PREGÚNTALE A ANTHO</p><h2>¿Tienes una duda?</h2></div></div>
       <form id="questionForm" class="question-form">
         <input required name="name" placeholder="Tu nombre">
         <input name="phone" placeholder="WhatsApp, opcional">
@@ -338,7 +388,7 @@
 
   <footer>
     <div class="shell footer-inner">
-      <div><strong>Glow by Antho</strong><p>Skin care • Hair care • Beauty studio</p></div>
+      <div><strong>Glow by Antho Studio</strong><p>Skincare • Haircare • K‑Beauty</p><small>Creado con mucho amor por Anthonia Díaz 🤍</small></div>
       <div><a href="admin.html">Acceso titular</a><p>WhatsApp: +56 9 7162 4406</p></div>
     </div>
   </footer>

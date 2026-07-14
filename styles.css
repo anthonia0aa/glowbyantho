@@ -257,3 +257,43 @@ body{background:radial-gradient(circle at 10% 10%,#fff0f5 0,transparent 30%),rad
   .routine-summary{grid-template-columns:1fr}.glow-score{grid-column:auto}
   .product-popover{display:none}
 }
+
+/* =========================================================
+   GLOW BY ANTHO STUDIO — VERSIÓN OFICIAL 1.0
+   ========================================================= */
+.ingredient-tool{display:none!important}
+.routine-layout{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:stretch}
+.progress-garden-card{border-radius:32px;overflow:hidden;background:#fff;border:1px solid #ead7df;box-shadow:0 22px 48px rgba(111,80,91,.12)}
+.progress-garden{position:relative;min-height:340px;background:linear-gradient(#dff3f8 0 52%,#f8eedc 52%);overflow:hidden}
+.garden-sky{position:absolute;inset:0 0 48%}.garden-sun{position:absolute;right:28px;top:24px;font-size:48px;filter:drop-shadow(0 8px 13px rgba(255,190,53,.25))}
+.garden-cloud{position:absolute;width:82px;height:24px;background:rgba(255,255,255,.78);border-radius:999px}
+.garden-cloud:before,.garden-cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
+.garden-cloud:before{width:34px;height:34px;left:13px;top:-15px}.garden-cloud:after{width:46px;height:46px;right:8px;top:-23px}
+.cloud-one{left:24px;top:58px}.cloud-two{right:46px;top:125px;scale:.7}
+.garden-soil{position:absolute;left:0;right:0;bottom:0;height:49%;background:linear-gradient(#d3aa87,#b98463)}
+.garden-plant{position:absolute;left:50%;bottom:44px;width:180px;height:250px;transform:translateX(-50%);z-index:3}
+.stem{position:absolute;width:12px;height:160px;left:84px;bottom:0;border-radius:999px;background:linear-gradient(90deg,#5b9a63,#83bd79);transform-origin:bottom;scale:1 .25;transition:.8s}
+.leaf{position:absolute;width:68px;height:38px;background:linear-gradient(135deg,#79b879,#4f9761);border-radius:100% 0 100% 0;opacity:0;transition:.65s}
+.leaf-a{left:33px;bottom:68px;rotate:-25deg}.leaf-b{right:28px;bottom:108px;rotate:30deg;scale:-1 1}
+.flower{position:absolute;font-size:54px;opacity:0;scale:.2;transition:.75s;filter:drop-shadow(0 8px 8px rgba(83,59,65,.16))}
+.flower-a{left:60px;top:12px}.flower-b{left:5px;top:84px;font-size:43px}.flower-c{right:3px;top:62px;font-size:42px}
+.garden-plant.level-1 .stem{scale:1 .55}.garden-plant.level-2 .stem{scale:1 1}.garden-plant.level-2 .leaf-a{opacity:1}.garden-plant.level-3 .leaf{opacity:1}.garden-plant.level-4 .flower-a{opacity:1;scale:1}.garden-plant.level-5 .flower{opacity:1;scale:1}
+.garden-status{padding:22px;text-align:center}.garden-status h3{font-family:"Playfair Display";font-size:27px;margin:6px 0}.garden-status p{color:#7b6871}
+.progress-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.progress-facts div{padding:14px;border-radius:18px;background:#fff5f8;border:1px solid #edd6df}
+.progress-facts strong,.progress-facts small{display:block}.progress-facts strong{font-family:"Playfair Display";font-size:30px;color:#d67798}.progress-facts small{font-size:10px;color:#8b7780}
+.routine-panel{padding:26px;border-radius:32px;background:rgba(255,255,255,.85);border:1px solid #ead7df;box-shadow:0 22px 48px rgba(126,85,102,.1)}
+.routine-intro{margin-bottom:20px}.routine-intro h3{font-family:"Playfair Display";font-size:28px;margin:4px 0}.routine-intro p{margin:0;color:#7d6c74}
+.daily-glow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.daily-glow-card{position:relative;min-height:245px;padding:24px;border-radius:26px;background:white;border:1px solid #ead7df;box-shadow:0 15px 34px rgba(127,84,101,.08);overflow:hidden;transition:.3s}
+.daily-glow-card:hover{transform:translateY(-6px)}.featured-daily{background:linear-gradient(145deg,#eaf8fb,#fff)}.antho-card{background:linear-gradient(145deg,#fff3f8,#fff)}
+.daily-label{font-size:9px;letter-spacing:.15em;color:#a55c78;font-weight:700}.daily-icon{font-size:35px;margin:20px 0 12px}
+.daily-glow-card h3{font-family:"Playfair Display";font-size:24px;margin:7px 0 10px}.daily-glow-card p,.daily-glow-card blockquote{line-height:1.55;color:#75636c;margin:0}
+.antho-avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#e9a6ba,#dceff4);color:white;font-family:"Playfair Display";font-size:28px;margin:20px 0 15px}
+.glow-challenge{margin-top:22px;padding:28px;border-radius:30px;background:linear-gradient(135deg,#fff8eb,#fff3f8);border:1px solid #ead8d9}
+.challenge-checks{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0}.challenge-checks label{display:flex;align-items:center;gap:8px;padding:13px;border-radius:15px;background:rgba(255,255,255,.8);cursor:pointer}
+.challenge-checks input{accent-color:#d9799a}.challenge-checks label.completed{text-decoration:line-through;opacity:.62}
+.challenge-result{padding:14px 18px;border-radius:17px;background:white;border:1px solid #ead7df}.challenge-result.complete{background:#edf8ef;border-color:#c7e1cc;color:#487553;font-weight:700}
+footer small{display:block;margin-top:7px;color:#ead9e0}
+@media(max-width:1050px){.routine-layout{grid-template-columns:1fr}.progress-garden{min-height:360px}.daily-glow-grid{grid-template-columns:1fr 1fr}.challenge-checks{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.daily-glow-grid{grid-template-columns:1fr}.challenge-checks{grid-template-columns:1fr}.progress-garden{min-height:330px}}

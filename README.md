@@ -1,16 +1,35 @@
-# Glow by Antho Studio — Final 3.0
+# Glow by Antho Studio — Versión oficial 1.0
 
-## Definición final
-- Portada premium con productos flotantes, reflejos y fichas al pasar el mouse.
-- Envases inspirados en Anua, Medicube y Torriden.
-- Mascarillas Abib reales con información rápida.
-- Sin franja redundante de nombres de marcas.
-- Mi Rutina Glow con checklist AM/PM, progreso, Glow Score y días de constancia.
-- Recordatorio diario de protector solar.
-- Día semanal de mascarilla.
-- Registro de próxima limpieza.
+Incluye:
+- Inicio premium.
+- Servicios faciales y capilares.
+- Glow Match facial y capilar conectado a Supabase.
+- Mi Rutina con checklist AM/PM.
+- Jardín visual como representación del progreso.
+- Nivel Glow y días de constancia.
+- Protección diaria.
+- Día de mascarilla.
+- Guarda tu próxima fecha.
+- Glow del día.
+- Ingrediente del día.
+- Mito o realidad.
+- Consejo de Antho.
+- Desafío Glow.
+- Glow Guide.
+- Tienda Abib.
+- Reservas.
+- Preguntas.
+- Panel privado.
+
+Se eliminó:
+- Resultados / sesiones sin fotografías.
 - Combinador de ingredientes.
-- Test, Supabase, panel privado, reservas, tienda, preguntas y WhatsApp conservados.
 
-## Publicación
-Extraer, copiar, reemplazar, Commit `Publicar Glow by Antho Final 3.0`, Push origin y recargar con Ctrl + F5.
+Publicación:
+1. Extraer el ZIP.
+2. Copiar todo.
+3. GitHub Desktop → Repository → Show in Explorer.
+4. Pegar y reemplazar.
+5. Commit: `Publicar Glow by Antho V1.0 oficial`.
+6. Push origin.
+7. Recargar con Ctrl + F5.
